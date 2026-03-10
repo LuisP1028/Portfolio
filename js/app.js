@@ -1,3 +1,29 @@
+async function loadChatWidget() {
+    try {
+        const response = await fetch('components/global/chat-widget.html');
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        
+        const html = await response.text();
+        const container = document.getElementById('chat-widget-container');
+        
+        if (container) {
+            container.innerHTML = html;
+            console.log("%c >> VILLAIN_OS WIDGET INJECTED ", "color: #ff3c00; font-weight: bold;");
+            
+            // Initialize the chat logic only AFTER the DOM elements exist
+            if (typeof initializeChatLogic === 'function') {
+                initializeChatLogic();
+            } else {
+                console.warn(">> WARN: initializeChatLogic() not found. Ensure chat-widget.js is loaded and wrapped correctly.");
+            }
+        } else {
+            console.error(">> ERR: Target #chat-widget-container not found in DOM.");
+        }
+    } catch (error) {
+        console.error('>> FAILED TO LOAD DOOM WIDGET:', error);
+    }
+}
+
 function buildFlag() {
     const container = document.getElementById('flag-container');
     if (!container) return;
@@ -45,7 +71,11 @@ function enterMainSite() {
     }, 800);
 }
 
-document.addEventListener('DOMContentLoaded', buildFlag);
+// Consolidate DOM initializations here
+document.addEventListener('DOMContentLoaded', () => {
+    buildFlag();
+    loadChatWidget();
+});
 
 function updateTime() {
     const now = new Date();
