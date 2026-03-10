@@ -1,0 +1,31 @@
+Act as an expert frontend developer and software architect. I am building a portfolio website with a strict "Industrial Cyberpunk" aesthetic (pitch-black base `#050505`, neon orange accents `#ff3c00`, CRT scanlines, and monospace typography). 
+
+We are integrating a chat interface for the "Philosophical Villain" project. This is a conversational agent fine-tuned on MF DOOM's linguistic style and backed by a Neo4j knowledge graph of philosophical texts. The frontend needs to connect to a Hugging Face Space running a FastAPI backend.
+
+Please write the code for the following three files and explain how to inject them into my `index.html` shell.
+
+### 1. `components/global/chat-widget.html`
+Create a single HTML component containing two main elements:
+* **The FAB (Floating Action Button):** A button containing a local image (`assets/doom_terminal_icon.jpg`). 
+* **The Chat Container:** The existing `.chat-container` DOM structure (I will provide the raw HTML from my `chatbox.html` file, please wrap it appropriately). It should sit just above the FAB.
+
+### 2. `css/chatbox.css`
+Write the CSS to handle the positioning and animations. Ensure it matches the overarching cyberpunk theme:
+* **FAB Styling:** Positioned fixed at the bottom-right (`bottom: 20px; right: 20px; z-index: 10000;`). Give the image a subtle border-radius and a glowing neon orange box-shadow (`box-shadow: 0 0 15px rgba(255, 60, 0, 0.4)`). Add a hover state that slightly scales the image up (`transform: scale(1.05)`).
+* **Chat Container Styling:** Positioned fixed above the FAB. It should be hidden by default (e.g., using `opacity: 0; pointer-events: none; transform: translateY(20px);`) and transition smoothly into view when an `.active` class is applied.
+* *Note: Do not write global CRT overlay animations, as those are already handled by my global stylesheet.*
+
+### 3. `js/chat-widget.js`
+Write the JavaScript to handle the UI toggling and the API communication. The backend is a FastAPI server expecting a specific JSON payload. 
+* **UI Logic:** Add an event listener to the FAB to toggle the `.active` class on the Chat Container.
+* **State Management:** Initialize a global array `let chatHistory = [];` to maintain the multi-turn conversation context.
+* **API Integration:** When the user submits a message (via Enter key or Transmit button), do the following:
+    1. Append the user's message to the DOM.
+    2. Show a "typing indicator" in the UI.
+    3. Make an asynchronous `fetch()` POST request to `https://<HUGGINGFACE_SPACE_URL>/chat`.
+    4. The JSON payload must match the `ChatRequest` Pydantic model: `{ "message": "user input", "history": chatHistory }`.
+    5. Await the response (which returns `{ "response": "Villain's reply" }`), hide the typing indicator, and append the Villain's reply to the DOM.
+    6. Update the `chatHistory` array with the new turn (e.g., `{"role": "user", "content": "..."}` and `{"role": "assistant", "content": "..."}`) so the Villain remembers the context for the next turn.
+    7. Implement basic error handling (e.g., if the fetch fails, append a red system error message to the chat log).
+
+Please provide the exact code blocks for these files.
