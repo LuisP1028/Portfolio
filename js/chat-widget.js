@@ -1,10 +1,17 @@
-document.addEventListener("DOMContentLoaded", () => {
+// Expose the logic globally so app.js can call it AFTER the HTML is injected
+window.initializeChatLogic = function() {
     const fab = document.getElementById("chat-fab");
     const container = document.getElementById("doom-chat-container");
     const closeBtn = document.getElementById("chat-close-btn");
     const chatMessages = document.getElementById("chat-messages");
     const chatInput = document.getElementById("chat-input");
     const transmitBtn = document.getElementById("chat-transmit-btn");
+
+    // Safety check: ensure elements exist before attaching listeners
+    if (!fab || !container) {
+        console.error(">> ERR: Chat DOM elements missing. Injection failed.");
+        return;
+    }
 
     // 1. Initialize State
     let chatHistory = [];
@@ -118,4 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
             handleTransmit();
         }
     });
-});
+
+    console.log("%c >> VILLAIN_OS LOGIC INITIALIZED ", "color: #ff3c00; font-weight: bold;");
+};

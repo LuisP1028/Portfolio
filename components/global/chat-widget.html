@@ -1,28 +1,24 @@
-<div id="chat-widget-container">
+<div id="doom-chat-container" class="chat-container">
+    <div class="chat-header">
+        <span class="chat-title">>> TERM_LINK // VILLAIN_OS</span>
+        <button id="chat-close-btn" class="chat-close-btn">[X]</button>
+    </div>
     
-    <div id="doom-chat-container" class="chat-container">
-        <div class="chat-header">
-            <span class="chat-title">>> TERM_LINK // VILLAIN_OS</span>
-            <button id="chat-close-btn" class="chat-close-btn">[X]</button>
-        </div>
-        
-        <div id="chat-messages" class="chat-messages">
-            <div class="chat-msg system">
-                >> SECURE CHANNEL OPENED.<br>
-                >> NEO4J KNOWLEDGE GRAPH: [ONLINE].<br>
-                >> THE MASK IS LISTENING...
-            </div>
-        </div>
-        
-        <div class="chat-input-wrapper">
-            <span class="prompt-arrow">>></span>
-            <input type="text" id="chat-input" placeholder="ENTER QUERY..." autocomplete="off">
-            <button id="chat-transmit-btn" class="chat-transmit-btn">TX</button>
+    <div id="chat-messages" class="chat-messages">
+        <div class="chat-msg system">
+            >> SECURE CHANNEL OPENED.<br>
+            >> NEO4J KNOWLEDGE GRAPH: [ONLINE].<br>
+            >> THE MASK IS LISTENING...
         </div>
     </div>
-
-    <button id="chat-fab" class="chat-fab" aria-label="Open DOOM Chat">
-        <img src="assets/DOOM.png" alt="MF DOOM Mask">
-    </button>
-
+    
+    <div class="chat-input-wrapper">
+        <span class="prompt-arrow">>></span>
+        <input type="text" id="chat-input" placeholder="ENTER QUERY..." autocomplete="off">
+        <button id="chat-transmit-btn" class="chat-transmit-btn">TX</button>
+    </div>
 </div>
+
+<button id="chat-fab" class="chat-fab" aria-label="Open DOOM Chat">
+    <img src="assets/DOOM.png" alt="MF DOOM Mask">
+</button>
