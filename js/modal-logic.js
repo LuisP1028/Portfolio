@@ -49,7 +49,7 @@ async function openMediaModal() {
                         <div class="desc-corner bl"></div><div class="desc-corner br"></div>
                         <div class="desc-label">MISSION_BRIEF // 01</div>
                         <div class="desc-content">
-                            <strong>Objective:</strong> Deploy scalable headless architecture for global retail operations.<br><br>
+                            <strong>Objective:</strong> I AM RECONSTRUCTING THIS SECTION RIGHT NOW. THANK YOU FOR YOUR PATIENCE. THIS IS NOT AN ERROR. -LUIS<br><br>
                             System integrates <strong>Next.js</strong> front-end logic with <strong>Go</strong> microservices for sub-millisecond transaction processing. Features include real-time inventory locking, high-frequency trading safeguards, and distributed CDN caching.
                         </div>
                         <div class="desc-line"></div>
