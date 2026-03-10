@@ -1,0 +1,123 @@
+<div class="snapshot-card">
+    <div class="card-inner">
+        <div class="front">
+            <div class="ui-header">
+                <span class="header-title">COINTEGRATION</span>
+                <span class="header-stat">P < 0.05</span>
+            </div>
+            <div class="ui-console">
+                <span>*** STATIONARITY TEST ***</span>
+                <span>> METHOD: ADF TEST</span>
+                <span>> ECONOMETRICS 101</span>
+            </div>
+            <div class="ui-viewport">
+                <ul class="readout-list">
+                    <li class="readout-item">
+                        <span class="readout-sym">&beta;</span>
+                        <span class="readout-desc">Rolling OLS spread anchor, sidestepping Johansen's noise instability, providing the robust, lag-free spread anchor [hedge scale] essential for effective SSM state estimation.</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="ui-footer">
+                <div class="bracket-box">
+                    Like two dogs on a leash—their paths (non-stationary) may wander, but distance between them stays stationary.
+                </div>
+            </div>
+            <div class="vert-strip">STAT: VALID</div>
+        </div>
+        <div class="back">
+            <div class="back-grid">
+                <h2 class="back-title">DEF_01</h2>
+                <p class="back-desc">
+                    A statistical property of a collection of time series variables that share a common stochastic drift.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="snapshot-card alert">
+    <div class="card-inner">
+        <div class="front">
+            <div class="ui-header">
+                <span class="header-title">STATE VECTORS</span>
+                <span class="header-stat">DIM: N</span>
+            </div>
+            <div class="ui-console">
+                <span>*** CURRENT SYSTEM STATE ***</span>
+                <span>> STEP: PREDICTION</span>
+                <span>> NOISE: GAUSSIAN</span>
+            </div>
+            <div class="ui-viewport">
+                <ul class="readout-list">
+                    <li class="readout-item"><span class="readout-sym">&mu;</span><span class="readout-desc">Time-varying fair value center.</span></li>
+                    <li class="readout-item"><span class="readout-sym">&kappa;</span><span class="readout-desc">Speed of mean reversion.</span></li>
+                    <li class="readout-item"><span class="readout-sym">&sigma;</span><span class="readout-desc">Instantaneous spread volatility.</span></li>
+                    <li class="readout-item"><span class="readout-sym">&tau;</span><span class="readout-desc">Seconds to revert 50% to mean.</span></li>
+                    <li class="readout-item"><span class="readout-sym">v</span><span class="readout-desc">Turbulence driving Mu and Sigma.</span></li>
+                    <li class="readout-item"><span class="readout-sym">a</span><span class="readout-desc">Flow aggression driving Kappa.</span></li>
+                </ul>
+            </div>
+            <div class="ui-footer">
+                <div class="bracket-box">
+                    <span style="color: #fff; background: var(--term-alert);">PROCESS</span> Current state estimation logic initialized.
+                </div>
+            </div>
+            <div class="vert-strip">MODE: ESTIMATE</div>
+        </div>
+        <div class="back">
+            <div class="back-grid">
+                <h2 class="back-title">DEF_02</h2>
+                <p class="back-desc">
+                    A set of data describing the exact state of a dynamic system at a given time t.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="snapshot-card">
+    <div class="card-inner">
+        <div class="front">
+            <div class="ui-header">
+                <span class="header-title">BAYESIAN INFERENCE</span>
+                <span class="header-stat">Mk_1</span>
+            </div>
+            <div class="ui-console">
+                <span>*** BAYES' THEOREM ***</span>
+                <span>> TYPE: UPDATES BELIEFS WITH EVIDENCE</span>
+                <span>> SUM: 1.0</span>
+            </div>
+            <div class="ui-viewport">
+                <ul class="readout-list">
+                    <li class="readout-item">
+                        <span class="readout-sym">x<sup>-</sup></span>
+                        <span class="readout-desc"><strong>Prior:</strong> Initial belief about state before data.</span>
+                    </li>
+                    <li class="readout-item">
+                        <span class="readout-sym">R</span>
+                        <span class="readout-desc"><strong>Obs Noise:</strong> Uncertainty in measurements linking state to data.</span>
+                    </li>
+                    <li class="readout-item">
+                        <span class="readout-sym">x<sup>+</sup></span>
+                        <span class="readout-desc"><strong>Posterior:</strong> Updated belief about state after data.</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="ui-footer">
+                <div class="bracket-box">
+                    Bayesian belief update cycle.
+                </div>
+            </div>
+            <div class="vert-strip">LOGIC: PROBABILISTIC</div>
+        </div>
+        <div class="back">
+            <div class="back-grid">
+                <h2 class="back-title">DEF_03</h2>
+                <p class="back-desc">
+                    A square matrix used to describe the transitions of a Markov chain. Each entry is a non-negative real number representing probability.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
