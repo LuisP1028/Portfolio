@@ -1,0 +1,46 @@
+<div id="template-somma-content">
+    <div class="somma-scene">
+        <div class="somma-card" id="somma-card">
+            <div class="somma-face active-side" id="face-front">
+                <button class="hud-btn btn-watch" onclick="window.toggleHud('front', event)">
+                    <span id="text-front">Watch Feed</span>
+                </button>
+                <button class="hud-btn btn-flip" onclick="window.flipCard(event)">SWITCH_VIDEO_FEED_</button>
+                <div id="player-front"></div>
+                <div class="hud-overlay" id="hud-front">
+                    <div class="hud-scanlines"></div>
+                    <div class="hud-top">
+                        <div class="hud-logo-box"><div class="hud-logo-symbol">A</div></div>
+                        <div class="hud-title-box"><div class="striped-text flicker">BAYESIAN INFERENCE</div></div>
+                    </div>
+                    <div class="hud-middle"><div class="dot-matrix-text">STATE SPACE MODEL / EXPLANATION/ </div></div>
+                    <div class="hud-spacer"></div>
+                    <div class="hud-bottom">
+                        <div class="hud-mission-box"><h2>THERMO<br>DYNAMICS</h2><div class="hud-sub-label">CAM_01 [ ACTIVE ]</div></div>
+                        <div class="hud-stats-box"><div class="stat-row"><span>PROTOCOL:</span><span>RICK_ROLL</span></div><div class="stat-row"><span>LATENCY:</span><span>12ms</span></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="somma-face back-face" id="face-back">
+                <button class="hud-btn btn-watch" onclick="window.toggleHud('back', event)">
+                    <span id="text-back">Watch Feed</span>
+                </button>
+                <button class="hud-btn btn-flip" onclick="window.flipCard(event)">SWITCH_VIDEO_FEED_</button>
+                <div id="player-back"></div>
+                <div class="hud-overlay" id="hud-back">
+                    <div class="hud-scanlines"></div>
+                    <div class="hud-top">
+                        <div class="hud-logo-box"><div class="hud-logo-symbol">B</div></div>
+                        <div class="hud-title-box"><div class="striped-text flicker">BAYES SSM ALGO /// </div></div>
+                    </div>
+                    <div class="hud-middle"><div class="dot-matrix-text">NASDAQ AND GOLD // COINTEGRATION</div></div>
+                    <div class="hud-spacer"></div>
+                    <div class="hud-bottom">
+                        <div class="hud-mission-box"><h2>MEAN<br>REVERSION</h2><div class="hud-sub-label">CAM_02 [ STANDBY ]</div></div>
+                        <div class="hud-stats-box"><div class="stat-row"><span>PROTOCOL:</span><span>ORNSTEIN-UHLENBECK</span></div><div class="stat-row"><span>LATENCY:</span><span>44ms</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
