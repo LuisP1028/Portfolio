@@ -71,10 +71,25 @@ function enterMainSite() {
     }, 800);
 }
 
+// Liquid Glass Header Logic
+function initGlassHeader() {
+    const header = document.querySelector('header');
+    if (!header) return;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            header.classList.add('glass-active');
+        } else {
+            header.classList.remove('glass-active');
+        }
+    });
+}
+
 // Consolidate DOM initializations here
 document.addEventListener('DOMContentLoaded', () => {
     buildFlag();
     loadChatWidget();
+    initGlassHeader();
 });
 
 function updateTime() {
