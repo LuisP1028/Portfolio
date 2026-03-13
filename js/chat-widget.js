@@ -6,6 +6,7 @@ window.initializeChatLogic = function() {
     const chatMessages = document.getElementById("chat-messages");
     const chatInput = document.getElementById("chat-input");
     const transmitBtn = document.getElementById("chat-transmit-btn");
+    const chatCallout = document.getElementById("chat-callout"); // Select the callout
 
     // Safety check: ensure elements exist before attaching listeners
     if (!fab || !container) {
@@ -17,10 +18,18 @@ window.initializeChatLogic = function() {
     let chatHistory = [];
     const API_URL = "https://choppedcheese-platodoomcave.hf.space/chat";
     let isAwaitingResponse = false;
+    let isCalloutDismissed = false; // Track if user has seen and dismissed the callout
 
     // 2. UI Toggling Logic
     function toggleChat() {
         container.classList.toggle("active");
+        
+        // Hide callout permanently on first click
+        if (chatCallout && !isCalloutDismissed) {
+            chatCallout.classList.add("hidden");
+            isCalloutDismissed = true;
+        }
+
         if (container.classList.contains("active")) {
             chatInput.focus();
             scrollToBottom();

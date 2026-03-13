@@ -2,7 +2,7 @@
    VILLAIN_OS CHAT WIDGET STYLES
    ========================================== */
 
-   #chat-widget-container {
+#chat-widget-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -202,4 +202,65 @@
 /* Mobile Responsiveness */
 @media (max-width: 600px) {
     .chat-container { width: calc(100vw - 40px); right: -10px; }
+}
+
+/* ==========================================
+   CALLOUT HOVER STYLES
+   ========================================== */
+
+.chat-callout {
+    position: absolute;
+    bottom: 80px; /* Sits 15px above the 65px FAB */
+    right: 10px;
+    background-color: var(--bg-color, #050505);
+    color: var(--text-main, #e0e0e0);
+    border: 1px solid var(--accent, #ff3c00);
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    z-index: 10001;
+    pointer-events: none; /* Prevents blocking clicks beneath it */
+    
+    /* Animation Defaults */
+    animation: float-bob 2s ease-in-out infinite;
+    transition: opacity 0.3s ease;
+}
+
+/* Sharp directional arrow (No rounded corners) */
+.chat-callout::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; /* Pulls the arrow outside the box */
+    right: 18px; /* Aligns directly over the center of the FAB */
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: var(--accent, #ff3c00) transparent transparent transparent;
+    display: block;
+    width: 0;
+}
+
+/* Floating Animation */
+@keyframes float-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+/* Terminal Cursor Blink */
+.cursor-blink {
+    display: inline-block;
+    margin-left: 5px;
+    color: var(--accent, #ff3c00);
+    animation: terminal-blink 1s step-end infinite;
+}
+
+@keyframes terminal-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* State Utility */
+.chat-callout.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
