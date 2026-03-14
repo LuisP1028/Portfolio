@@ -5,8 +5,7 @@
     --term-alert: #ff0033; 
     --term-vector: #0088ff;
     --font-pixel: 'VT323', monospace;
-    /* Updated to fluid width */
-    --card-width: clamp(260px, 80vw, 320px);
+    --card-width: 320px;
     --card-ratio: 2.5 / 3.5;
     --radius: 14px;
     --hud-primary: #ff3c00; 
@@ -23,10 +22,7 @@
 }
 .modal-overlay.active { opacity: 1; pointer-events: all; }
 .modal-content {
-    width: 90vw; height: 85vh; 
-    /* Added max constraints for ultra-wide screens */
-    max-width: 1400px; max-height: 900px;
-    border: 2px solid var(--accent); background: #000;
+    width: 90vw; height: 85vh; border: 2px solid var(--accent); background: #000;
     position: relative; display: flex; flex-direction: column;
     box-shadow: 0 0 30px rgba(255, 60, 0, 0.2); transform: scale(0.98);
     transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
@@ -55,8 +51,7 @@
 .modal-content::after { content: "SEC_PROTOCOLS: ACTIVE"; position: absolute; bottom: -25px; right: 0; color: var(--text-dim); font-size: 0.7rem; font-family: var(--font-mono); }
 
 /* MEDIA SHOWCASE LAYOUT */
-/* Updated grid columns to be more flexible */
-.media-showcase { display: grid; grid-template-columns: 1fr minmax(280px, 360px); gap: 2rem; color: var(--text-main); align-items: start; }
+.media-showcase { display: grid; grid-template-columns: 1fr 360px; gap: 2rem; color: var(--text-main); align-items: start; }
 .video-section { position: -webkit-sticky; position: sticky; top: 0; z-index: 10; }
 .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border: 1px solid var(--grid-line); width: 100%; }
 .video-wrapper iframe, .video-wrapper video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
@@ -170,4 +165,84 @@
     .modal-content { height: 95vh; width: 95vw; }
     .gallery-scroll { flex-direction: row; overflow-x: auto; justify-content: flex-start; padding-bottom: 20px; scroll-snap-type: x mandatory; }
     .snapshot-card { scroll-snap-align: center; margin-right: 15px; }
+}
+
+/* =========================================
+   >> MOBILE OVERRIDES // MAX-WIDTH: 768px
+   ========================================= */
+@media (max-width: 768px) {
+    /* Fullscreen Modal */
+    .modal-content { 
+        width: 100vw; 
+        height: 100vh; 
+        border: none; 
+        border-radius: 0; 
+        transform: scale(1);
+    }
+    .modal-body { 
+        padding: 0.5rem; 
+    }
+    .media-showcase { 
+        gap: 1rem; 
+    }
+
+    /* Somma Video Player & HUD Scaling */
+    .somma-scene { 
+        height: auto; 
+        min-height: 220px; 
+    }
+    .hud-top { height: 20%; }
+    .hud-logo-symbol { font-size: 1.5rem; letter-spacing: -2px; }
+    .hud-title-box { padding-left: 1rem; }
+    .striped-text { font-size: 1.2rem; letter-spacing: 1px; }
+    .dot-matrix-text { font-size: 1rem; letter-spacing: 2px; }
+    
+    .hud-bottom { 
+        grid-template-columns: 1fr; /* Stack mission and stats on very small screens */
+        min-height: auto; 
+    }
+    .hud-mission-box { 
+        border-right: none; 
+        border-bottom: 1px solid var(--hud-primary); 
+        padding: 0.5rem;
+    }
+    .hud-stats-box { padding: 0.5rem; }
+    .hud-mission-box h2 { font-size: 1.2rem; }
+
+    /* HUD Buttons */
+    .hud-btn { 
+        width: auto; 
+        font-size: 0.65rem; 
+        padding: 0 8px; 
+    }
+    .btn-watch { top: 10px; right: 10px; height: 28px; }
+    .btn-flip { top: 40px; right: 10px; height: 28px; }
+
+    /* Fluid Snapshot Cards */
+    .gallery-scroll { 
+        padding: 10px 5px; 
+        gap: 1rem; 
+    }
+    .snapshot-card { 
+        --card-width: 85vw; /* Fluid width based on screen */
+        max-width: 320px; 
+    }
+    .header-title { font-size: 1.3rem; }
+    .header-stat { font-size: 1rem; }
+    .ui-console { font-size: 0.55rem; }
+    .readout-sym { font-size: 0.9rem; width: 25px; }
+    .readout-desc { font-size: 0.6rem; }
+    .back-title { font-size: 1.5rem; }
+    .back-desc { font-size: 0.75rem; }
+
+    /* Desc Box Adjustments */
+    .desc-box { 
+        padding: 1.2rem 1rem; 
+        margin-top: 1rem; 
+    }
+    .desc-label { 
+        font-size: 0.8rem; 
+        left: 10px; 
+    }
+    .desc-content { font-size: 0.75rem; }
 }
