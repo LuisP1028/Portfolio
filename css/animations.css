@@ -29,30 +29,33 @@
 }
 @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
+/* =========================================
+   FLUID VISUALIZATION COMPONENTS
+========================================= */
 /* VIZ-01: MEAN REVERSION OSCILLOSCOPE */
-.viz-ssm { width: 100%; height: 100%; background: #050505; position: relative; overflow: hidden; display: flex; align-items: center; }
+.viz-ssm { container-type: inline-size; width: 100%; height: 100%; background: #050505; position: relative; overflow: hidden; display: flex; align-items: center; }
 .ssm-line { width: 100%; height: 2px; background: rgba(255, 255, 255, 0.1); position: absolute; }
 .ssm-wave { position: absolute; left: 0; top: 0; width: 200%; height: 100%; fill: none; stroke: var(--accent); stroke-width: 2; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: ssm-dash 3s linear infinite, ssm-move 4s linear infinite; opacity: 0.8; }
-.ssm-overlay-text { position: absolute; bottom: 10px; right: 10px; font-family: var(--font-pixel); color: var(--accent); font-size: 0.8rem; background: rgba(0,0,0,0.7); padding: 2px 5px; border: 1px solid var(--accent); }
+.ssm-overlay-text { position: absolute; bottom: clamp(4px, 2.5cqi, 10px); right: clamp(4px, 2.5cqi, 10px); font-family: var(--font-pixel); color: var(--accent); font-size: clamp(0.55rem, 4cqi, 0.8rem); background: rgba(0,0,0,0.7); padding: 2px 5px; border: 1px solid var(--accent); }
 @keyframes ssm-dash { to { stroke-dashoffset: 0; } }
 @keyframes ssm-move { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 /* VIZ-02: OPTIONS GAMMA WALLS */
-.viz-gex { width: 100%; height: 100%; background: #080808; display: flex; align-items: flex-end; justify-content: center; gap: 4px; padding: 20px; position: relative; border-bottom: 2px solid #333; }
-.gex-bar { width: 8px; background: #0088ff; animation: gex-breathe 2s infinite ease-in-out; box-shadow: 0 0 5px #0088ff; position: relative; }
+.viz-gex { container-type: inline-size; width: 100%; height: 100%; background: #080808; display: flex; align-items: flex-end; justify-content: center; gap: clamp(2px, 1.5cqi, 4px); padding: clamp(10px, 6cqi, 20px); position: relative; border-bottom: 2px solid #333; }
+.gex-bar { width: clamp(4px, 2.5cqi, 8px); background: #0088ff; animation: gex-breathe 2s infinite ease-in-out; box-shadow: 0 0 5px #0088ff; position: relative; }
 .gex-bar.put { background: var(--accent); box-shadow: 0 0 5px var(--accent); animation-delay: 0.5s; }
 .gex-center-line { position: absolute; bottom: 0; left: 50%; height: 100%; width: 1px; border-left: 1px dashed #555; }
 @keyframes gex-breathe { 0%, 100% { height: var(--h); opacity: 0.5; } 50% { height: calc(var(--h) * 1.2); opacity: 1; } }
 
 /* VIZ-03: CNN KERNEL SCANNER */
-.viz-cnn { width: 100%; height: 100%; background: #050505; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(5, 1fr); gap: 1px; position: relative; overflow: hidden; padding: 1px; }
+.viz-cnn { container-type: inline-size; width: 100%; height: 100%; background: #050505; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(5, 1fr); gap: 1px; position: relative; overflow: hidden; padding: 1px; }
 .cnn-pixel { background: #111; transition: background 0.2s; }
 .cnn-pixel:nth-child(odd) { background: #161616; }
 .cnn-pixel:nth-child(3n) { background: #1a1a1a; }
 .cnn-pixel:nth-child(7n) { background: #202020; }
 .cnn-pixel:nth-child(5n):hover { background: #444; }
 .cnn-scanner { position: absolute; z-index: 10; pointer-events: none; width: 30%; height: 60%; border: 2px solid #ff0033; box-shadow: 0 0 15px #ff0033, inset 0 0 20px rgba(255, 0, 50, 0.1); background: rgba(255, 0, 50, 0.05); animation: cnn-stride 4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite; }
-.cnn-scanner::after { content: "KERNEL_3x3"; position: absolute; bottom: -18px; left: 0; font-size: 9px; color: #ff0033; font-family: var(--font-mono); white-space: nowrap; letter-spacing: 1px; text-shadow: 0 0 4px #ff0033; }
+.cnn-scanner::after { content: "KERNEL_3x3"; position: absolute; bottom: clamp(-18px, -5cqi, -12px); left: 0; font-size: clamp(6px, 2.5cqi, 9px); color: #ff0033; font-family: var(--font-mono); white-space: nowrap; letter-spacing: 1px; text-shadow: 0 0 4px #ff0033; }
 @keyframes cnn-stride { 0% { left: 0%; top: 0%; border-color: #ff0033; } 20% { left: 70%; top: 0%; } 40% { left: 70%; top: 40%; border-color: #fff; } 50% { border-color: #ff0033; } 60% { left: 0%; top: 40%; } 80% { left: 0%; top: 0%; border-color: #fff; } 100% { left: 0%; top: 0%; border-color: #ff0033; } }
 
 /* STARTUP SEQUENCE */
