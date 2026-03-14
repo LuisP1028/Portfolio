@@ -28,8 +28,9 @@ function buildFlag() {
     const container = document.getElementById('flag-container');
     if (!container) return;
 
-    const totalW = 600;
-    const totalH = 320;
+    // Updated to dynamically fetch container dimensions
+    const totalW = container.clientWidth || 600;
+    const totalH = container.clientHeight || 320;
     const slices = 30;
     const sliceW = totalW / slices;
     container.innerHTML = '';
@@ -84,6 +85,15 @@ function initGlassHeader() {
         }
     });
 }
+
+// Added Resize Listener for Responsive Flag
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        buildFlag();
+    }, 150);
+});
 
 // Consolidate DOM initializations here
 document.addEventListener('DOMContentLoaded', () => {
