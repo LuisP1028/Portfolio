@@ -50,7 +50,7 @@ async function openMediaModal() {
                         <div class="desc-label">MISSION_BRIEF // 01</div>
                         <div class="desc-content">
                             <strong>Objective:</strong> DOMINATE FINANCIAL MARKETS<br><br>
-                            In financial markets, you're up against the best traders in the world from <strong>day one</strong>  <strong>This is a good prototype</strong> but it needs funding.
+                            In financial markets, you're up against the best traders in the world from <strong>day one</strong>  <strong>This prototype increased timely executions during volatile periods by 70%</strong>
                         </div>
                         <div class="desc-line"></div>
                         <div class="desc-meta"><span>SEC_LEVEL: 4</span><span>[ ENCRYPTED ]</span></div>
