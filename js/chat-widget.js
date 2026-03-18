@@ -15,14 +15,14 @@ window.initializeChatLogic = function() {
         return;
     }
 
-    // --- NEW: CLEAN SVG INJECTION & NO TRIGGER BUTTON ---
+    // --- NEW: HORIZONTAL SVG INJECTION ---
     // Remove any existing module to prevent duplicates on hot-reload
     const existingModule = document.getElementById("follow-module");
     if (existingModule) existingModule.remove();
 
     const followHTML = `
         <div id="follow-module" class="follow-module">
-            <div class="panel-header">FOLLOW DOOM</div>
+            <span class="follow-label">[SYS_LINKS] >></span>
             
             <a href="https://x.com/PLATODOOM" target="_blank" class="follow-link">
                 <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>

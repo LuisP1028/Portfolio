@@ -258,72 +258,72 @@
     pointer-events: none;
 }
 
-
 /* ==========================================
    FOLLOW DOOM MODULE (SLIDE-OUT)
    ========================================== */
 
+/* Container: Horizontal Tray */
 .follow-module {
     position: absolute;
-    bottom: 0;
-    right: 80px; /* Sits safely to the left of the 65px DOOM head */
+    bottom: 0; 
+    right: 80px; /* Anchors right next to the 65px FAB, plus 15px gap */
+    height: 65px; /* Matches FAB height perfectly */
     background: rgba(5, 5, 5, 0.98);
     border: 1px solid var(--accent, #ff3c00);
-    padding: 15px;
-    width: 160px;
+    padding: 0 15px;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row; /* Forces horizontal layout */
+    align-items: center;
+    gap: 15px;
     backdrop-filter: blur(5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
-    z-index: 9998; /* Ensures it slides behind the DOOM head */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.9);
+    z-index: 9998;
     
-    /* Animation defaults: Hidden and tucked behind the DOOM head */
+    /* Animation: Hides slightly to the right behind the FAB */
     opacity: 0;
-    transform: translateX(65px); 
+    transform: translateX(40px); 
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
-/* Toggled via JS when DOOM head is clicked */
+/* Active State */
 .follow-module.revealed {
     opacity: 1;
-    transform: translateX(0); /* Slides perfectly into view */
+    transform: translateX(0); /* Slides smoothly into position */
     pointer-events: auto;
 }
 
-.panel-header {
-    color: var(--text-main, #e0e0e0);
+/* Inline Label */
+.follow-label {
+    color: var(--text-dim, #666666);
     font-family: var(--font-mono, monospace);
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-    text-transform: uppercase;
+    font-size: 0.8rem;
     letter-spacing: 1px;
 }
 
+/* Link Button Formatting */
 .follow-link {
     text-decoration: none;
     color: var(--accent, #ff3c00);
     border: 1px solid var(--accent, #ff3c00);
-    padding: 10px;
+    padding: 6px 12px;
     font-family: var(--font-mono, monospace);
-    font-size: 0.85rem;
-    text-transform: uppercase;
+    font-size: 0.8rem;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     transition: all 0.2s;
 }
 
-/* Native SVGs Styling */
+/* SVG Icon Sizing */
 .social-icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 10px;
-    fill: var(--accent, #ff3c00); /* Uses your theme accent color */
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+    fill: var(--accent, #ff3c00);
     transition: fill 0.2s;
 }
 
+/* Hover States */
 .follow-link:hover {
     background: var(--accent, #ff3c00);
     color: #000;
@@ -331,5 +331,5 @@
 }
 
 .follow-link:hover .social-icon {
-    fill: #000; /* Reverts icon color to black on hover */
+    fill: #000;
 }
