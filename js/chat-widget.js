@@ -20,10 +20,10 @@ window.initializeChatLogic = function() {
             <div id="follow-module" class="follow-module">
                 <div id="follow-panel" class="follow-panel">
                     <div class="panel-header">FOLLOW DOOM</div>
-                    <a href="https://x.com" target="_blank" class="follow-link">
+                    <a href="https://x.com/PLATODOOM" target="_blank" class="follow-link">
                         <span style="font-family: sans-serif; font-weight: bold; margin-right: 8px;">𝕏</span> x
                     </a>
-                    <a href="https://linkedin.com" target="_blank" class="follow-link">[LINKEDIN]</a>
+                    <a href="https://www.linkedin.com/in/plato-doom-b06b603b7/" target="_blank" class="follow-link">[LINKEDIN]</a>
                 </div>
                 <button id="follow-trigger-btn" class="follow-trigger">follow doom</button>
             </div>
