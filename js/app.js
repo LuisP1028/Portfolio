@@ -28,9 +28,8 @@ function buildFlag() {
     const container = document.getElementById('flag-container');
     if (!container) return;
 
-    // Use fluid 'em' units so the flag coordinates scale naturally
-    const totalW = 60; // Represents 60em (acts as 600px at max scale)
-    const totalH = 32; // Represents 32em (acts as 320px at max scale)
+    const totalW = 600;
+    const totalH = 320;
     const slices = 30;
     const sliceW = totalW / slices;
     container.innerHTML = '';
@@ -38,23 +37,21 @@ function buildFlag() {
     for (let i = 0; i < slices; i++) {
         const div = document.createElement('div');
         div.className = 'flag-segment';
-        div.style.width = `${sliceW}em`;
+        div.style.width = `${sliceW}px`;
         div.style.backgroundSize = `
-            1.8em 1.8em,
-            25em 17.5em,
-            ${totalW}em ${totalH}em
+            18px 18px,
+            250px 175px,
+            ${totalW}px ${totalH}px
         `;
         const offset = -i * sliceW;
         div.style.backgroundPosition = `
-            ${offset}em 0,
-            ${offset}em 0,
-            ${offset}em 0
+            ${offset}px 0,
+            ${offset}px 0,
+            ${offset}px 0
         `;
         div.style.animationDelay = `${i * 0.08}s`;
-        
-        // Scale the wave amplitude mathematically down to match em units
-        const amp = 0.4 + (i * 0.02);
-        div.style.setProperty('--amp', `${amp}em`);
+        const amp = 4 + (i * 0.2);
+        div.style.setProperty('--amp', `${amp}px`);
         container.appendChild(div);
     }
 }
