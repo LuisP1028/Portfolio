@@ -6,13 +6,36 @@ window.initializeChatLogic = function() {
     const chatMessages = document.getElementById("chat-messages");
     const chatInput = document.getElementById("chat-input");
     const transmitBtn = document.getElementById("chat-transmit-btn");
-    const callout = document.getElementById("chat-callout"); // New reference
+    const callout = document.getElementById("chat-callout");
 
     // Safety check: ensure elements exist before attaching listeners
     if (!fab || !container) {
         console.error(">> ERR: Chat DOM elements missing. Injection failed.");
         return;
     }
+
+    // --- NEW: Dynamically Inject the Follow Module behind the FAB ---
+    if (!document.getElementById("follow-module")) {
+        const followHTML = `
+            <div id="follow-module" class="follow-module">
+                <div id="follow-panel" class="follow-panel">
+                    <div class="panel-header">FOLLOW DOOM</div>
+                    <a href="https://x.com" target="_blank" class="follow-link">
+                        <span style="font-family: sans-serif; font-weight: bold; margin-right: 8px;">𝕏</span> x
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="follow-link">[LINKEDIN]</a>
+                </div>
+                <button id="follow-trigger-btn" class="follow-trigger">follow doom</button>
+            </div>
+        `;
+        // Injects right before the FAB inside the container
+        fab.insertAdjacentHTML('beforebegin', followHTML);
+    }
+
+    const followModule = document.getElementById("follow-module");
+    const followTrigger = document.getElementById("follow-trigger-btn");
+    const followPanel = document.getElementById("follow-panel");
+    // ----------------------------------------------------------------
 
     // 1. Initialize State
     let chatHistory = [];
@@ -29,7 +52,18 @@ window.initializeChatLogic = function() {
             console.log(">> SYS_MSG: Callout permanently dismissed for session.");
         }
 
+        // Toggle the main chat container
         container.classList.toggle("active");
+        
+        // Toggle the slide-out follow module
+        if (followModule) {
+            followModule.classList.toggle("revealed");
+            // If we are closing the chat, also hide the link panel if it's open
+            if (!container.classList.contains("active") && followPanel) {
+                followPanel.classList.remove("active");
+            }
+        }
+
         if (container.classList.contains("active")) {
             chatInput.focus();
             scrollToBottom();
@@ -37,7 +71,15 @@ window.initializeChatLogic = function() {
     }
 
     fab.addEventListener("click", toggleChat);
-    closeBtn.addEventListener("click", () => container.classList.remove("active"));
+    closeBtn.addEventListener("click", toggleChat); // Ensure closing retracts the menu too
+
+    // Event Listener for the slide-out follow button
+    if (followTrigger && followPanel) {
+        followTrigger.addEventListener("click", (e) => {
+            e.stopPropagation(); // Prevents click from bubbling 
+            followPanel.classList.toggle("active");
+        });
+    }
 
     function scrollToBottom() {
         chatMessages.scrollTop = chatMessages.scrollHeight;

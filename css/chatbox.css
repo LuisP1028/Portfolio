@@ -28,6 +28,7 @@
     justify-content: center;
     align-items: center;
     padding: 0;
+    z-index: 9999; /* Ensures FAB sits above the slide-out tray */
 }
 
 .chat-fab:hover {
@@ -255,4 +256,105 @@
 #chat-callout.hidden {
     opacity: 0;
     pointer-events: none;
+}
+
+
+/* ==========================================
+   FOLLOW DOOM MODULE (SLIDE-OUT)
+   ========================================== */
+
+.follow-module {
+    position: absolute;
+    bottom: 0; /* Aligned with bottom of FAB */
+    right: 0; /* Starts directly behind the FAB */
+    display: flex;
+    flex-direction: column-reverse; /* Button on bottom, links slide up */
+    align-items: flex-end;
+    z-index: 9998; /* Sits just underneath the FAB */
+    transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+/* When the FAB is clicked, slide it to the left */
+.follow-module.revealed {
+    transform: translateX(-75px); 
+}
+
+.follow-trigger {
+    background: rgba(5, 5, 5, 0.95);
+    border: 1px solid var(--accent, #ff3c00);
+    border-radius: 8px; /* Match FAB */
+    color: var(--accent, #ff3c00);
+    height: 65px; /* Match FAB height perfectly */
+    padding: 0 15px;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 10px rgba(255, 60, 0, 0.2);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.follow-module.revealed .follow-trigger {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.follow-trigger:hover {
+    background: rgba(255, 60, 0, 0.1);
+    box-shadow: 0 0 15px rgba(255, 60, 0, 0.4);
+}
+
+/* The popup panel containing the links */
+.follow-panel {
+    background: rgba(5, 5, 5, 0.98);
+    border: 1px solid var(--accent, #ff3c00);
+    margin-bottom: 10px;
+    padding: 15px;
+    width: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    backdrop-filter: blur(5px);
+    
+    /* Hidden state */
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.follow-panel.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.panel-header {
+    color: var(--text-main, #e0e0e0);
+    font-family: var(--font-mono, monospace);
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.follow-link {
+    text-decoration: none;
+    color: var(--accent, #ff3c00);
+    border: 1px solid var(--accent, #ff3c00);
+    padding: 10px;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    transition: all 0.2s;
+}
+
+.follow-link:hover {
+    background: var(--accent, #ff3c00);
+    color: #000;
+    box-shadow: 0 0 10px rgba(255, 60, 0, 0.5);
 }
