@@ -7,6 +7,7 @@ window.initializeChatLogic = function() {
     const chatInput = document.getElementById("chat-input");
     const transmitBtn = document.getElementById("chat-transmit-btn");
     const callout = document.getElementById("chat-callout");
+    const widgetContainer = document.getElementById("chat-widget-container");
 
     // Safety check: ensure elements exist before attaching listeners
     if (!fab || !container) {
@@ -14,27 +15,32 @@ window.initializeChatLogic = function() {
         return;
     }
 
-    // --- NEW: Dynamically Inject the Follow Module behind the FAB ---
-    if (!document.getElementById("follow-module")) {
-        const followHTML = `
-            <div id="follow-module" class="follow-module">
-                <div id="follow-panel" class="follow-panel">
-                    <div class="panel-header">FOLLOW DOOM</div>
-                    <a href="https://x.com/PLATODOOM" target="_blank" class="follow-link">
-                        <span style="font-family: sans-serif; font-weight: bold; margin-right: 8px;">𝕏</span> x
-                    </a>
-                    <a href="https://www.linkedin.com/in/plato-doom-b06b603b7/" target="_blank" class="follow-link">[LINKEDIN]</a>
-                </div>
-                <button id="follow-trigger-btn" class="follow-trigger">follow doom</button>
-            </div>
-        `;
-        // Injects right before the FAB inside the container
+    // --- NEW: CLEAN SVG INJECTION & NO TRIGGER BUTTON ---
+    // Remove any existing module to prevent duplicates on hot-reload
+    const existingModule = document.getElementById("follow-module");
+    if (existingModule) existingModule.remove();
+
+    const followHTML = `
+        <div id="follow-module" class="follow-module">
+            <div class="panel-header">FOLLOW DOOM</div>
+            
+            <a href="https://x.com/PLATODOOM" target="_blank" class="follow-link">
+                <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+                X
+            </a>
+            
+            <a href="https://www.linkedin.com/in/plato-doom-b06b603b7/" target="_blank" class="follow-link">
+                <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                LINKEDIN
+            </a>
+        </div>
+    `;
+    
+    // Inject immediately before the FAB inside the container
+    if (widgetContainer) {
         fab.insertAdjacentHTML('beforebegin', followHTML);
     }
-
     const followModule = document.getElementById("follow-module");
-    const followTrigger = document.getElementById("follow-trigger-btn");
-    const followPanel = document.getElementById("follow-panel");
     // ----------------------------------------------------------------
 
     // 1. Initialize State
@@ -58,10 +64,6 @@ window.initializeChatLogic = function() {
         // Toggle the slide-out follow module
         if (followModule) {
             followModule.classList.toggle("revealed");
-            // If we are closing the chat, also hide the link panel if it's open
-            if (!container.classList.contains("active") && followPanel) {
-                followPanel.classList.remove("active");
-            }
         }
 
         if (container.classList.contains("active")) {
@@ -72,14 +74,6 @@ window.initializeChatLogic = function() {
 
     fab.addEventListener("click", toggleChat);
     closeBtn.addEventListener("click", toggleChat); // Ensure closing retracts the menu too
-
-    // Event Listener for the slide-out follow button
-    if (followTrigger && followPanel) {
-        followTrigger.addEventListener("click", (e) => {
-            e.stopPropagation(); // Prevents click from bubbling 
-            followPanel.classList.toggle("active");
-        });
-    }
 
     function scrollToBottom() {
         chatMessages.scrollTop = chatMessages.scrollHeight;

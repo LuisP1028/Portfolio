@@ -265,68 +265,30 @@
 
 .follow-module {
     position: absolute;
-    bottom: 0; /* Aligned with bottom of FAB */
-    right: 0; /* Starts directly behind the FAB */
-    display: flex;
-    flex-direction: column-reverse; /* Button on bottom, links slide up */
-    align-items: flex-end;
-    z-index: 9998; /* Sits just underneath the FAB */
-    transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-}
-
-/* When the FAB is clicked, slide it to the left */
-.follow-module.revealed {
-    transform: translateX(-75px); 
-}
-
-.follow-trigger {
-    background: rgba(5, 5, 5, 0.95);
-    border: 1px solid var(--accent, #ff3c00);
-    border-radius: 8px; /* Match FAB */
-    color: var(--accent, #ff3c00);
-    height: 65px; /* Match FAB height perfectly */
-    padding: 0 15px;
-    font-family: var(--font-mono, monospace);
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 0 10px rgba(255, 60, 0, 0.2);
-    opacity: 0;
-    pointer-events: none;
-}
-
-.follow-module.revealed .follow-trigger {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.follow-trigger:hover {
-    background: rgba(255, 60, 0, 0.1);
-    box-shadow: 0 0 15px rgba(255, 60, 0, 0.4);
-}
-
-/* The popup panel containing the links */
-.follow-panel {
+    bottom: 0;
+    right: 80px; /* Sits safely to the left of the 65px DOOM head */
     background: rgba(5, 5, 5, 0.98);
     border: 1px solid var(--accent, #ff3c00);
-    margin-bottom: 10px;
     padding: 15px;
     width: 160px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     backdrop-filter: blur(5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+    z-index: 9998; /* Ensures it slides behind the DOOM head */
     
-    /* Hidden state */
+    /* Animation defaults: Hidden and tucked behind the DOOM head */
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateX(65px); 
     pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
-.follow-panel.active {
+/* Toggled via JS when DOOM head is clicked */
+.follow-module.revealed {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0); /* Slides perfectly into view */
     pointer-events: auto;
 }
 
@@ -353,8 +315,21 @@
     transition: all 0.2s;
 }
 
+/* Native SVGs Styling */
+.social-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    fill: var(--accent, #ff3c00); /* Uses your theme accent color */
+    transition: fill 0.2s;
+}
+
 .follow-link:hover {
     background: var(--accent, #ff3c00);
     color: #000;
     box-shadow: 0 0 10px rgba(255, 60, 0, 0.5);
+}
+
+.follow-link:hover .social-icon {
+    fill: #000; /* Reverts icon color to black on hover */
 }
