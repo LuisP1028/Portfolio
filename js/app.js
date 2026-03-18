@@ -28,51 +28,33 @@ function buildFlag() {
     const container = document.getElementById('flag-container');
     if (!container) return;
 
-    // Use fluid 'em' units mapped to the container's dynamically scaling font-size
-    const totalW = 60; // 60em total width
-    const totalH = 32; // 32em total height
-    const slices = 30; // Number of vertical segments for the wave
+    // Use fluid 'em' units so the flag coordinates scale naturally
+    const totalW = 60; // Represents 60em (acts as 600px at max scale)
+    const totalH = 32; // Represents 32em (acts as 320px at max scale)
+    const slices = 30;
     const sliceW = totalW / slices;
-    
-    // Canton (the union/star box) proportions
-    const cantonW = 25; 
-    const cantonH = 17.5; 
-    
-    // Star field spacing
-    const starSpacingX = 2.4;
-    const starSpacingY = 2.4;
-
     container.innerHTML = '';
 
     for (let i = 0; i < slices; i++) {
         const div = document.createElement('div');
         div.className = 'flag-segment';
         div.style.width = `${sliceW}em`;
-        
-        // Define background layers natively in 'em' so they scale automatically
-        // Layer 1: Stars | Layer 2: Canton Box | Layer 3: Stripes
         div.style.backgroundSize = `
-            ${starSpacingX}em ${starSpacingY}em,
-            ${cantonW}em ${cantonH}em,
+            1.8em 1.8em,
+            25em 17.5em,
             ${totalW}em ${totalH}em
         `;
-        
         const offset = -i * sliceW;
-        
-        // Offset each slice to create a continuous background image
         div.style.backgroundPosition = `
             ${offset}em 0,
             ${offset}em 0,
             ${offset}em 0
         `;
-        
         div.style.animationDelay = `${i * 0.08}s`;
         
-        // Fluid wave amplitude: physically scales with the flag size
-        // The wave gets slightly more exaggerated toward the trailing edge
-        const amp = 0.4 + (i * 0.015);
+        // Scale the wave amplitude mathematically down to match em units
+        const amp = 0.4 + (i * 0.02);
         div.style.setProperty('--amp', `${amp}em`);
-        
         container.appendChild(div);
     }
 }
