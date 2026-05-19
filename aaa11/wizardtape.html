@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villain OS - Hazard Tape Component</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Standalone Variables & Environment Setup */
+        :root {
+            --font-display: 'Chakra Petch', 'Arial Black', sans-serif;
+            --tape-bg: #ffea00; /* Harsh industrial cyber-yellow */
+            --tape-text: #000000;
+            --tape-border: #000000;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #050505;
+            overflow-x: hidden;
+            font-family: var(--font-display);
+            /* A subtle background grid to simulate the OS environment */
+            background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
+            background-size: 20px 20px;
+            height: 100vh;
+        }
+
+        /* ==========================================
+           HAZARD TAPE COMPONENT
+           ========================================== */
+
+        .hazard-tape-wrapper {
+            position: absolute;
+            top: 40px;
+            left: -5%;
+            width: 110vw; /* Oversized to prevent gaps when rotated */
+            height: 55px;
+            background-color: var(--tape-bg);
+            border-top: 4px solid var(--tape-border);
+            border-bottom: 4px solid var(--tape-border);
+            transform: rotate(-2deg);
+            z-index: 9999;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            
+            /* 8-bit chunky drop shadow */
+            box-shadow: 4px 6px 0px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 234, 0, 0.1);
+            
+            /* Tie into the unstable OS environment */
+            animation: tape-flicker 0.15s infinite;
+        }
+
+        /* 45-Degree Hazard Stripes */
+        .hazard-tape-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 25px,
+                rgba(0, 0, 0, 0.15) 25px,
+                rgba(0, 0, 0, 0.15) 50px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Localized CRT Scanlines */
+        .hazard-tape-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0) 50%,
+                rgba(0, 0, 0, 0.3) 50%,
+                rgba(0, 0, 0, 0.3)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* The Scrolling Track */
+        .hazard-tape-track {
+            display: flex;
+            white-space: nowrap;
+            /* Width must be wide enough to loop. 
+               The animation translates by -50%, meaning the track must be 200% the width of the wrapper */
+            width: max-content;
+            animation: tape-scroll 20s linear infinite;
+            z-index: 2;
+        }
+
+        /* The Text Elements */
+        .hazard-tape-text {
+            color: var(--tape-text);
+            font-weight: 900;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 0 2rem;
+            display: inline-block;
+        }
+
+        /* ==========================================
+           KEYFRAMES
+           ========================================== */
+
+        @keyframes tape-scroll {
+            0% { transform: translateX(0); }
+            /* Translate by exactly half the total width of the track to create an infinite loop */
+            100% { transform: translateX(-50%); } 
+        }
+
+        @keyframes tape-flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="hazard-tape-wrapper">
+        <div class="hazard-tape-track">
+            <span class="hazard-tape-text">>> PORTFOLIO UPDATE IN PROGRESS &lt;&lt;</span>
+            <span class="hazard-tape-text">>> PORTFOLIO UPDATE IN PROGRESS &lt;&lt;</span>
+            <span class="hazard-tape-text">>> PORTFOLIO UPDATE IN PROGRESS &lt;&lt;</span>
+            <span class="hazard-tape-text">>> PORTFOLIO UPDATE IN PROGRESS &lt;&lt;</span>
+            <span class="hazard-tape-text">>> PORTFOLIO UPDATE IN PROGRESS &lt;&lt;</span>
+            
+            <span class="hazard-tape-text">>> PORTFOLIO UPDATE IN PROGRESS &lt;&lt;</span>
+            <span class="hazard-tape-text">>> PORTFOLIO UPDATE IN PROGRESS &lt;&lt;</span>
+            <span class="hazard-tape-text">>> PORTFOLIO UPDATE IN PROGRESS &lt;&lt;</span>
+            <span class="hazard-tape-text">>> PORTFOLIO UPDATE IN PROGRESS &lt;&lt;</span>
+            <span class="hazard-tape-text">>> PORTFOLIO UPDATE IN PROGRESS &lt;&lt;</span>
+        </div>
+    </div>
+
+</body>
+</html>
