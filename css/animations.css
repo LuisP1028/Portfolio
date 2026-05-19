@@ -130,16 +130,20 @@
 
 .hazard-tape-wrapper {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 200vw;
+    
+    /* MODIFIED: Shifted anchors to the bottom-right quadrant */
+    top: 90%;
+    left: 85%;
+    
+    width: 200vw; 
     height: 55px;
     background-color: #ffea00;
     border-top: 4px solid #000000;
     border-bottom: 4px solid #000000;
     
+    /* MODIFIED: Adjusted rotation angle for corner bleed */
     /* REQUIRED: 3D Transform and will-change bypass GPU culling bugs */
-    transform: translate3d(-50%, -50%, 0) rotate(-30deg);
+    transform: translate3d(-50%, -50%, 0) rotate(-38deg);
     will-change: transform; 
     backface-visibility: hidden;
     
