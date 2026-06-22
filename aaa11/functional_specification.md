@@ -1,13 +1,10 @@
-# Functional Specification: Hero Background Particle Waves
+# Functional Specification: Hero Background Z-Axis Stacking Fix
 
 ## Overview
-This document specifies the desired behavior and presentation of an interactive 3D particle wave visualization, which will serve as the background for the hero section of the portfolio.
+This document specifies the exact functional behavior required to resolve a layout bug where the Three.js canvas incorrectly renders within the standard document flow, pushing down the hero text content rather than resting behind it as a true background.
 
 ## Desired Functionality
-1. **Interactive Background**: A high-density 3D particle wave effect must render continuously behind the text and interactive elements of the hero section.
-2. **Animation Dynamics**: The particles must animate autonomously, forming layered sine and cosine waves. 
-3. **Cursor Reactivity**: The particle field must dynamically react to the user's cursor position. Specifically, particles in proximity to the cursor should elevate ("lift") and shift color, creating a trailing wake effect behind the cursor movement.
-4. **Fixed Viewpoint**: The camera perspective of the 3D scene must remain fixed at all times. Users must not be able to zoom, pan, or rotate the scene.
-5. **Ethereal Glow**: The visualization must incorporate a bloom effect to give the particles an ethereal, glowing appearance.
-6. **Non-Obstructive Layering**: The visualization must be positioned entirely behind the hero text, hazard tape, and interactive buttons. It must allow mouse movements to be detected for its interaction logic but must not block clicks or hover states for the HTML elements layered above it.
-7. **Responsive & Performant**: The visualization must dynamically resize its canvas to match the dimensions of the hero section. Additionally, the system should allow for graceful performance degradation (e.g., lower particle count or disabled bloom on less capable devices) to preserve overall site responsiveness. No interactive controls or GUI panels should be visible to the user.
+1. **Absolute Background Positioning**: The particle wave visualization (`#hero-particles`) must function strictly as a non-obstructive background element to the `.hero` section. It must be completely removed from the flexbox document flow.
+2. **Z-Axis Hierarchy**: The canvas must be correctly positioned in the Z-axis (via CSS stacking contexts) to guarantee it rests entirely behind `.hero-content` and the `.hazard-tape-wrapper`. 
+3. **Unobstructed Interactivity**: The hero text and "INITIATE_VIEW" buttons (which possess `z-index: 10001`) must sit cleanly above the canvas and remain fully clickable, without the canvas stealing pointer events.
+4. **Cache-Busting Integration**: To guarantee that returning browsers (or the current session) instantly respect the updated CSS positioning rules, the CSS stylesheet linkage must implement a cache-busting query parameter (e.g., `?v=1.1`). This prevents aggressive browser caching from ignoring the newly added absolute positioning rules that take the canvas out of the layout flow.
