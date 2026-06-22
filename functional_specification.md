@@ -1,37 +1,21 @@
-# Functional Specification
+# Functional Specification: OBJ-04 Card Video Asset
 
-## 1. Objective
-The goal is to implement a new "card" component and an associated "terminal-modal" window within the project. These components must be functionally, structurally, and visually identical to the existing deployed unit cards (e.g., `OBJ-01`, `OBJ-02`, `OBJ-03`) and the current `terminal-modal` implementation.
+## Overview
+This specification details the functionality for updating the `OBJ-04` card component to display a continuously playing video asset within its designated "NEW COMPONENT ASSET" bounding box.
 
-## 2. Desired Functionality: Card Component (`card-id`)
+## Expected Functionality
 
-### Structure and Presentation
-*   **Grid Placement**: The new component must be rendered as the very **first** item within the `.grid` container, visually preceding the existing `OBJ-01` card and effectively shifting all subsequent items to the right.
-*   **Container**: The new item must be housed within an `article` element carrying the `card` class, ensuring it inherits the established layout and styling (padding, borders, background, hover states) of the existing grid items.
-*   **Header Area**: The top section must include a `card-header` `div` that prominently displays a unique identifier (e.g., `OBJ-04`) utilizing the `card-id` class. It should also include the standard decorative crosshair/target symbol (`✜`) found in existing cards.
-*   **Visual Asset Area**: A dedicated `card-img` section must be present to house project-specific visualizations, animations, or images (e.g., mimicking the CRT overlays, specific waveform SVGs, or pixel grids seen in other objects).
-*   **Content Area**: Below the visual asset, the card must feature an `<h3>` heading for the project title and a `<p>` tag for the project description.
-*   **Action Buttons**: At the bottom of the card, a `btn-group` container must be provided. This will house interaction points (buttons or anchor links with the `btn` class) that trigger further actions, such as opening a live demo or viewing source code.
+### Asset Integration
+The component identified as `OBJ-04` will contain a video element replacing the existing placeholder content inside the "NEW COMPONENT ASSET" container.
+- **Media Source:** The video to be displayed is located at: `https://storage.googleapis.com/doom-tagging/platodoom_tagging.mp4`.
 
-### Interactivity
-### Interactivity
-*   The action buttons within the card must be capable of invoking JavaScript functions (similar to existing `onclick="openTerminal(...)"` or `onclick="openMediaModal()"` events) to trigger modal windows or route users to external resources.
-*   **For All External Spaces (e.g., OBJ-02, OBJ-03, OBJ-04):** The button must trigger the modal passing the explicitly formatted direct-embed URL (e.g., `https://choppedcheese-digitaltwin.hf.space`) and a `true` boolean flag. This boolean flag forces the `openTerminal` logic to bypass the `<gradio-app>` web component and render the content securely within an HTML `<iframe>`, resolving underlying status and CORS fetch failures.
+### Playback Behavior
+The video player must adhere to the following behavioral requirements:
+- **Automatic Playback:** The video must play automatically when the page loads or when it enters the viewport (depending on standard inline media behaviors).
+- **Looping:** The video must play on a continuous, uninterrupted loop without reaching a stopped state at the end of the file.
+- **Silent/Muted:** The video must play entirely without audio.
 
-## 3. Desired Functionality: Terminal Modal (`terminal-modal`)
-
-### Structure and Presentation
-*   **Overlay Container**: The new modal must use a full-screen `div` container with the `modal-overlay` class, ensuring it dims the background and sits above all other content.
-*   **Content Window**: Inside the overlay, a `modal-content` `div` must be structured to hold the specific modal information.
-*   **Header Bar**: The top of the modal window must feature a `modal-header` `div`. This header must include a system-style status message (e.g., `>> REMOTE_LINK_ESTABLISHED // TERMINAL_XX`) and a close button (e.g., `[TERMINATE_SESSION]`).
-*   **Body Area**: A `modal-body` container must be present below the header to dynamically load or house the specific content triggered by the card's action buttons (such as an iframe or detailed text).
-
-### Interactivity
-*   **Trigger Mechanism**: The modal must be hidden by default and only revealed when specific functions (invoked by the new card's action buttons) are called.
-*   **Dismissal Mechanisms**: The modal must be capable of being closed (hidden) via two primary methods:
-    1.  Clicking the explicit close button within the modal header.
-    2.  Clicking anywhere on the dark overlay background outside of the modal content area (e.g., using an `onclick="if(event.target === this) closeTerminal()"` pattern).
-
-## 4. Constraints
-*   **Absolute Parity**: The resulting HTML structure and CSS classes must perfectly mirror the existing patterns established in `index.html`. No novel structural paradigms should be introduced.
-*   **No Code Generation**: This document strictly defines the *what*. It deliberately omits any specific HTML snippets, CSS rules, or JavaScript logic required to achieve these outcomes.
+### Visual Presentation and Layout Constraints
+- **Orientation Handling:** The provided video asset has a vertical aspect ratio (portrait mode). The designated bounding box for the "NEW COMPONENT ASSET" within `OBJ-04` is oriented horizontally (landscape mode).
+- **Cropping & Scaling:** The video must completely fill the horizontal dimensions of the bounding box. The aspect ratio of the video must be preserved to prevent distortion or stretching. Consequently, the video must visually cover the entire container, resulting in the top and bottom portions of the vertical video overflowing and being cleanly cropped/hidden from view.
+- **Containment:** No visual artifacts or video elements should bleed outside of the "NEW COMPONENT ASSET" bounding box.

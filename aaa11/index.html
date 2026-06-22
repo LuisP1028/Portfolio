@@ -121,6 +121,34 @@
 
             <div class="grid">
 
+                <article class="card" id="obj-04-card">
+                    <div class="card-header">
+                        <span class="card-id">OBJ-04</span>
+                        <div style="font-size:1.5rem;">✜</div>
+                    </div>
+
+                    <div class="card-img">
+                        <div class="viz-cnn"
+                            style="border:1px solid var(--term-alert); display:flex; align-items:center; justify-content:center; color:var(--term-alert); font-size:0.8rem; text-align:center;">
+                            <div style="padding:10px;">
+                                [ NEW COMPONENT ASSET ]<br><br>
+                                AWAITING INITIALIZATION...
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>EVIL DIGITAL TWIN</h3>
+                    <p>Digital Twin architecture, for a model finetuned on my favorite philosophy texts, a seed universe
+                        of stock tickers, news articles, MF DOOM, and research papers across interesting quantitative
+                        domains.</p>
+                    <div class="btn-group">
+                        <button onclick="openTerminal04('https://choppedcheese-digitaltwin.hf.space', true)"
+                            class="btn">LIVE_DEMO</button>
+                        <a href="https://huggingface.co/spaces/ChoppedCheese/DigitalTwin/tree/main" target="_blank"
+                            class="btn">SRC_CODE</a>
+                    </div>
+                </article>
+
                 <article class="card">
                     <div class="card-header">
                         <span class="card-id">OBJ-01</span>
@@ -181,7 +209,7 @@
                     <p>Options dealer positioning analyzer: calculates GEX/DEX profiles from market data to identify key
                         support/resistance levels based on market maker hedging activity.</p>
                     <div class="btn-group">
-                        <button onclick="openTerminal('https://choppedcheese-choppedgreeks.hf.space')"
+                        <button onclick="openTerminal('https://choppedcheese-choppedgreeks.hf.space', true)"
                             class="btn">LIVE_DEMO</button>
                         <a href="https://huggingface.co/spaces/ChoppedCheese/ChoppedGreeks/tree/main" target="_blank"
                             class="btn">SRC_CODE</a>
@@ -263,7 +291,7 @@
                     </div>
 
                     <div class="btn-group">
-                        <button onclick="openTerminal('https://choppedcheese-choppedcnnmalware.hf.space')"
+                        <button onclick="openTerminal('https://choppedcheese-choppedcnnmalware.hf.space', true)"
                             class="btn">LIVE_DEMO</button>
                         <a href="https://github.com/LuisP1028/CNN-Virus-Scanner" target="_blank"
                             class="btn">SRC_CODE</a>
@@ -323,6 +351,17 @@
                 <button class="close-btn" onclick="closeTerminal()">[TERMINATE_SESSION]</button>
             </div>
             <div class="modal-body" id="terminal-body">
+            </div>
+        </div>
+    </div>
+
+    <div id="terminal-modal-04" class="modal-overlay" onclick="if(event.target === this) closeTerminal04()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>>> REMOTE_LINK_ESTABLISHED // TERMINAL_04</span>
+                <button class="close-btn" onclick="closeTerminal04()">[TERMINATE_SESSION]</button>
+            </div>
+            <div class="modal-body" id="terminal-body-04">
             </div>
         </div>
     </div>
