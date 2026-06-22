@@ -1,15 +1,16 @@
-# Functional Specification: OBJ-04 Video Crop Adjustment
+# Functional Specification: Header Layout Conflict Resolution
 
 ## Overview
-This specification details the functionality for updating the vertical alignment of the video asset within the `OBJ-04` card to ensure the subject's face remains fully visible.
+This specification details the functionality for resolving a visual layout conflict where the top-left header element overlaps with the primary typography components of the page.
 
 ## Expected Functionality
 
 ### Visual Presentation and Layout Constraints
-- **Orientation Handling:** The video asset within the "NEW COMPONENT ASSET" bounding box is vertically oriented, while the container is horizontal. It is correctly scaled to cover the container width.
-- **Focal Point Adjustment:** Currently, the video's default cropping behavior centers it vertically, cutting off the top of the video (the model's face).
-- **Target Adjustment:** The vertical alignment of the video must be shifted upwards. The visual cropping focus must prioritize the top edge of the video so that the model's head and upper torso are fully visible within the bounding box, forcing the clipped/overflowing area entirely to the bottom of the video frame.
+- **Header Separation:** The top-left header element (containing "LUIS_PEREZ // PORTFOLIO SUBMISSION" and its bordered container) must be distinctly separated from the main page content, specifically the large "ARCHITECTING DIGITAL SUPERIORITY" text block.
+- **Overlap Prevention:** The header and the main page typography must be prevented from visually intersecting, clipping into each other, or bleeding together.
+- **Responsiveness:** The clear separation and prevention of visual overlap must be maintained across all screen sizes and across different scroll positions/states.
+- **Structural Integrity:** The layout adjustment must respect the established boundaries of the page components, ensuring that resolving this conflict does not introduce unintended shifting or overlapping of other elements below or adjacent to the typography blocks.
 
 ### Behavioral Constraints
-- No changes to the `src`, `autoplay`, `loop`, `muted`, or `playsinline` behavior are required.
-- The width and height must continue to fill 100% of the bounding box.
+- No changes to the textual content or spelling are required.
+- The fundamental layout hierarchy of the page should remain intact, focusing strictly on resolving the collision between these two specific regions of the viewport.

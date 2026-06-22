@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NRO // SECURE RELAY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --bg-color: #000000;
+        --fg-color: #FFFFFF;
+        --accent: #FF5500;
+        --grid-color: #1a1a1a;
+        --font-head: 'Chakra Petch', sans-serif;
+        --font-mono: 'Share Tech Mono', monospace;
+    }
+
+    /* --- CRT & GLOBAL ATMOSPHERE --- */
+    body {
+        background-color: var(--bg-color);
+        color: var(--fg-color);
+        font-family: var(--font-mono);
+        margin: 0;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        box-sizing: border-box;
+        overflow: hidden;
+        /* Dotted Grid Background */
+        background-image: radial-gradient(var(--grid-color) 1px, transparent 1px);
+        background-size: 20px 20px;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 12px;
+        background: var(--bg-color);
+        border-left: 1px solid var(--fg-color);
+    }
+    ::-webkit-scrollbar-thumb {
+        background: transparent;
+        border: 1px solid var(--accent);
+        box-shadow: inset 0 0 0 2px var(--bg-color);
+    }
+
+    /* CRT Overlay Effects */
+    .crt-overlay {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        background-size: 100% 2px, 3px 100%;
+        animation: flicker 0.15s infinite;
+        opacity: 0.15;
+    }
+
+    @keyframes flicker {
+        0% { opacity: 0.15; }
+        5% { opacity: 0.12; }
+        10% { opacity: 0.15; }
+        100% { opacity: 0.15; }
+    }
+
+    /* --- CHAT CONTAINER --- */
+    .chat-container {
+        width: 100%;
+        max-width: 800px;
+        height: 85vh;
+        display: flex;
+        flex-direction: column;
+        background: rgba(0, 0, 0, 0.8);
+        border: 2px solid var(--fg-color);
+        position: relative;
+        box-shadow: 0 0 20px rgba(255, 85, 0, 0.1);
+    }
+
+    /* Corner Brackets for Container */
+    .chat-container::before, .chat-container::after {
+        content: ''; position: absolute; width: 20px; height: 20px;
+        border: 4px solid var(--accent); transition: all 0.2s; z-index: 10;
+        pointer-events: none;
+    }
+    .chat-container::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+    .chat-container::after { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+    /* --- CHAT HEADER --- */
+    .chat-header {
+        border-bottom: 2px solid var(--fg-color);
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(90deg, #111 0%, #000 100%);
+    }
+
+    .chat-header h2 {
+        font-family: var(--font-head);
+        margin: 0;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .flasher {
+        width: 12px; height: 12px;
+        background: var(--accent);
+        animation: blink 1s infinite step-end;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .status-badge {
+        border: 1px solid var(--fg-color);
+        padding: 2px 8px;
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+    }
+
+    /* --- CHAT LOG (MESSAGES) --- */
+    .chat-log {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .message {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        animation: scanlineFadeIn 0.3s ease-out forwards;
+    }
+
+    @keyframes scanlineFadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg-meta {
+        font-size: 0.7rem;
+        color: #888;
+        margin-bottom: 3px;
+        letter-spacing: 1px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .msg-content {
+        padding: 10px 15px;
+        font-size: 1rem;
+        line-height: 1.4;
+        position: relative;
+        text-transform: uppercase;
+        word-wrap: break-word;
+    }
+
+    /* System / Other Agent Message */
+    .message.system .msg-content {
+        border-left: 2px solid var(--fg-color);
+        background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+        color: var(--fg-color);
+    }
+    .message.system .msg-meta .sender { color: var(--fg-color); font-weight: bold; }
+
+    /* User / Operator Message */
+    .message.operator {
+        align-items: flex-end;
+    }
+    .message.operator .msg-content {
+        border-right: 2px solid var(--accent);
+        background: linear-gradient(270deg, rgba(255,85,0,0.1) 0%, transparent 100%);
+        color: var(--accent);
+        text-align: right;
+    }
+    .message.operator .msg-meta {
+        justify-content: flex-end;
+    }
+    .message.operator .msg-meta .sender { color: var(--accent); font-weight: bold; }
+
+    /* Typing Indicator */
+    .typing-indicator {
+        display: none; /* Toggled via JS */
+        color: var(--accent);
+        font-family: var(--font-mono);
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    .typing-indicator::after {
+        content: '█';
+        animation: blink 0.8s infinite;
+    }
+
+    /* --- CHAT INPUT AREA --- */
+    .chat-input-wrapper {
+        border-top: 2px solid var(--fg-color);
+        padding: 15px 20px;
+        display: flex;
+        gap: 15px;
+        background: #000;
+    }
+
+    .input-field-container {
+        flex: 1;
+        position: relative;
+        background: #000;
+        padding: 3px;
+    }
+
+    /* Brackets for input */
+    .input-field-container::before, .input-field-container::after {
+        content: ''; position: absolute; width: 8px; height: 8px;
+        border: 2px solid var(--fg-color); transition: all 0.2s;
+    }
+    .input-field-container::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+    .input-field-container::after { bottom: 0; right: 0; border-left: none; border-top: none; }
+    .input-field-container:focus-within::before, .input-field-container:focus-within::after {
+        border-color: var(--accent);
+    }
+
+    .terminal-input {
+        width: 100%;
+        background: #000;
+        border: 1px solid #333;
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        padding: 12px 15px;
+        text-transform: uppercase;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    .terminal-input:focus {
+        border-color: var(--accent);
+        background-image: radial-gradient(rgba(255,85,0,0.05) 1px, transparent 0);
+        background-size: 4px 4px;
+    }
+
+    .btn-transmit {
+        background: transparent;
+        border: 2px solid var(--accent);
+        color: var(--accent);
+        font-family: var(--font-head);
+        font-size: 1rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+        padding: 0 20px;
+        cursor: pointer;
+        text-transform: uppercase;
+        clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        transition: all 0.1s;
+    }
+
+    .btn-transmit:hover {
+        background: var(--accent);
+        color: #000;
+    }
+    .btn-transmit:active {
+        transform: scale(0.98);
+    }
+
+</style>
+</head>
+<body>
+
+<div class="crt-overlay"></div>
+
+<div class="chat-container">
+    <div class="chat-header">
+        <h2><div class="flasher"></div> SECURE RELAY // LINK-7</h2>
+        <div>
+            <span class="status-badge" style="color:var(--accent); border-color:var(--accent);">ENCRYPTED</span>
+            <span class="status-badge">REC</span>
+        </div>
+    </div>
+
+    <div class="chat-log" id="chatLog">
+        <div class="message system">
+            <div class="msg-meta">
+                <span class="sender">SYS_CONTROL</span>
+                <span class="timestamp">[14:00:22Z]</span>
+            </div>
+            <div class="msg-content">
+                HANDSHAKE ESTABLISHED. SECURE TUNNEL ACTIVE.<br>
+                AWAITING OPERATOR INPUT.
+            </div>
+        </div>
+
+        <div class="message system">
+            <div class="msg-meta">
+                <span class="sender">OVERWATCH</span>
+                <span class="timestamp">[14:01:05Z]</span>
+            </div>
+            <div class="msg-content">
+                CONFIRM VISUAL ON TARGET BLACKBRIAR. INTERCEPT PROTOCOLS ARE STANDING BY.
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">OVERWATCH IS TRANSMITTING</div>
+    </div>
+
+    <div class="chat-input-wrapper">
+        <div class="input-field-container">
+            <input type="text" class="terminal-input" id="chatInput" placeholder="ENTER TRANSMISSION..." autocomplete="off">
+        </div>
+        <button class="btn-transmit" id="sendBtn">Transmit</button>
+    </div>
+</div>
+
+<script>
+    const chatLog = document.getElementById('chatLog');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const typingIndicator = document.getElementById('typingIndicator');
+
+    // Helper: Get Current UTC Time like [14:02:44Z]
+    function getZuluTime() {
+        const now = new Date();
+        const hrs = String(now.getUTCHours()).padStart(2, '0');
+        const mins = String(now.getUTCMinutes()).padStart(2, '0');
+        const secs = String(now.getUTCSeconds()).padStart(2, '0');
+        return `[${hrs}:${mins}:${secs}Z]`;
+    }
+
+    // Function to add a message to the UI
+    function appendMessage(sender, text, isOperator) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `message ${isOperator ? 'operator' : 'system'}`;
+        
+        msgDiv.innerHTML = `
+            <div class="msg-meta">
+                ${isOperator ? `<span class="timestamp">${getZuluTime()}</span><span class="sender">${sender}</span>` 
+                             : `<span class="sender">${sender}</span><span class="timestamp">${getZuluTime()}</span>`}
+            </div>
+            <div class="msg-content">${text}</div>
+        `;
+        
+        // Insert before the typing indicator
+        chatLog.insertBefore(msgDiv, typingIndicator);
+        chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    // Handle Transmit Command
+    function handleTransmit() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        // Add Operator Message
+        appendMessage('OPERATOR_99', text, true);
+        chatInput.value = '';
+
+        // Simulate System Response
+        typingIndicator.style.display = 'block';
+        chatLog.scrollTop = chatLog.scrollHeight;
+
+        setTimeout(() => {
+            typingIndicator.style.display = 'none';
+            const responses = [
+                "COPY THAT. EXECUTING DIRECTIVE.",
+                "DATA PACKET RECEIVED. ANALYZING...",
+                "NEGATIVE. CLEARANCE LEVEL INSUFFICIENT.",
+                "ROUTING REQUEST THROUGH LANGLEY SERVERS."
+            ];
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            appendMessage('OVERWATCH', randomResponse, false);
+        }, 1500 + Math.random() * 1500);
+    }
+
+    // Event Listeners
+    sendBtn.addEventListener('click', handleTransmit);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleTransmit();
+    });
+</script>
+
+</body>
+</html>

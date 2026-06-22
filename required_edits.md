@@ -1,24 +1,25 @@
-# Required Edits: OBJ-04 Video Crop Adjustment
+# Required Edits: Header Layout Conflict Resolution
 
-This document outlines the step-by-step edits necessary to adjust the visual cropping of the OBJ-04 video element, conforming to the `functional_specification.md`.
+## Target Files
+1. `/Users/diesel/Portfolio/Portfolio/css/styles.css`
 
-## 1. File to Modify: `/Users/diesel/Portfolio/Portfolio/css/styles.css`
-**Action:** Update the CSS class `.obj-04-video` to adjust the vertical object position.
+## Step-by-Step Edit Instructions
 
-*   **Location:** Find the `.obj-04-video` class definition at the bottom of the file.
-*   **Addition:** Add the `object-position: top;` property to force the cropping logic to prioritize the top of the video (the model's face), rather than the default center vertical alignment.
+### 1. Update `header` CSS Rules
+- **Locate**: The `header` block in `styles.css` (around line 41).
+- **Modification**: 
+  - Change `z-index: 100;` to `z-index: 10005;` (or a value strictly greater than `.hero-content`'s `10001`). This ensures the sticky header renders above the main page typography rather than underneath it.
+  - Change `background: transparent;` to `background: var(--bg-color);` to provide a solid backing. This prevents the large hero text from bleeding through the header elements when scrolling.
 
-*The updated class should look exactly like this:*
-```css
-.obj-04-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top; /* Adjusts focal point to the top edge */
-    border: 1px solid var(--term-alert);
-    box-sizing: border-box;
-}
-```
+### 2. Adjust `.hero-content` Positioning Constraints (Optional but Recommended)
+- **Locate**: The `.hero-content` block in `styles.css` (around line 80).
+- **Modification**:
+  - Add `padding-top: 2rem;` to ensure there is breathing room between the sticky header and the top of the typography, preventing collision on smaller viewport heights before scrolling even begins.
 
-## Readiness Check
-These granular instructions directly implement the `functional_specification.md` requirements. The singular addition of the `object-position` property fulfills the layout constraints without affecting other video attributes.
+### 3. Update `header.glass-active` Background (If applicable)
+- **Locate**: The `header.glass-active` block in `styles.css` (around line 51).
+- **Modification**:
+  - Ensure it retains its `backdrop-filter` and dark background. The increased `z-index` from the parent `header` rule will automatically apply here, protecting the glass effect from being overwritten by `.hero-content`.
+
+## Logical Outcome
+By elevating the header's z-index above the hero content and giving it an opaque or blurred background layer, the header will distinctly float over the page. Any scrolling action will send the "ARCHITECTING DIGITAL SUPERIORITY" text cleanly behind the header, fulfilling the structural constraints defined in `functional_specification.md`.
