@@ -15,6 +15,8 @@ The goal is to implement a new "card" component and an associated "terminal-moda
 
 ### Interactivity
 *   The action buttons within the card must be capable of invoking JavaScript functions (similar to existing `onclick="openTerminal(...)"` or `onclick="openMediaModal()"` events) to trigger modal windows or route users to external resources.
+*   Specifically, the "LIVE_DEMO" button must trigger the modal and pass the explicit target URL: `https://huggingface.co/spaces/ChoppedCheese/DigitalTwin`.
+*   Because the target HuggingFace space is a Docker container (not a native Gradio app), the logic must strictly enforce rendering the external content within an HTML `<iframe>` rather than the default `<gradio-app>` web component.
 
 ## 3. Desired Functionality: Terminal Modal (`terminal-modal`)
 
