@@ -16,8 +16,7 @@ The goal is to implement a new "card" component and an associated "terminal-moda
 ### Interactivity
 ### Interactivity
 *   The action buttons within the card must be capable of invoking JavaScript functions (similar to existing `onclick="openTerminal(...)"` or `onclick="openMediaModal()"` events) to trigger modal windows or route users to external resources.
-*   **For Docker/HTML Spaces (e.g., OBJ-04):** The button must trigger the modal passing the explicitly formatted direct-embed URL (e.g., `https://choppedcheese-digitaltwin.hf.space`) and a `true` boolean flag to force `<iframe>` rendering, bypassing `X-Frame-Options` blocks.
-*   **For Native Gradio Spaces (e.g., OBJ-02, OBJ-03):** The button must trigger the modal passing the standard directory URL (e.g., `https://huggingface.co/spaces/ChoppedCheese/ChoppedGreeks`). This format is an absolute architectural requirement for the `<gradio-app>` web component API to successfully complete its backend status check.
+*   **For All External Spaces (e.g., OBJ-02, OBJ-03, OBJ-04):** The button must trigger the modal passing the explicitly formatted direct-embed URL (e.g., `https://choppedcheese-digitaltwin.hf.space`) and a `true` boolean flag. This boolean flag forces the `openTerminal` logic to bypass the `<gradio-app>` web component and render the content securely within an HTML `<iframe>`, resolving underlying status and CORS fetch failures.
 
 ## 3. Desired Functionality: Terminal Modal (`terminal-modal`)
 
