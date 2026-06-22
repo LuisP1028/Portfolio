@@ -7,8 +7,8 @@
 **Required Modifications:**
 1.  Locate the button currently defined as:
     `<button onclick="openTerminal04('https://huggingface.co/spaces/example')" class="btn">LIVE_DEMO</button>`
-2.  **Action:** Replace the entire line with the following explicit command, utilizing the second argument `true` to force iframe rendering for the Docker space:
-    `<button onclick="openTerminal04('https://huggingface.co/spaces/ChoppedCheese/DigitalTwin', true)" class="btn">LIVE_DEMO</button>`
+2.  **Action:** Replace the entire line with the following explicit command, utilizing the direct-embed `.hf.space` domain to bypass security blocks, and the second argument `true` to force iframe rendering for the Docker space:
+    `<button onclick="openTerminal04('https://choppedcheese-digitaltwin.hf.space', true)" class="btn">LIVE_DEMO</button>`
 
 ### Edit 2: Update Card Metadata to Reflect the New Project
 **Location:** Still inside the `obj-04-card` `article` in `index.html`.
