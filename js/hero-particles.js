@@ -69,8 +69,8 @@ for (let i = 0; i < particleCount; i++) {
 
     const color = new THREE.Color();
     const distance = Math.sqrt(x * x + z * z);
-    const hue = (distance * 0.1) % 1;
-    color.setHSL(hue, 0.8, 0.6);
+    const hue = 0.02 + (Math.random() * 0.04); // Base red/orange variance
+    color.setHSL(hue, 0.8, 0.4); // Darker, highly saturated resting state
 
     colors[i3] = color.r;
     colors[i3 + 1] = color.g;
@@ -127,9 +127,11 @@ function animate() {
         positions[i3 + 2] = z + Math.cos(time) * mouseInfluence * 0.5;
 
         const color = new THREE.Color();
-        const hue = (distance * 0.1 + time * 0.1 + mouseInfluence * 0.2) % 1;
-        const saturation = 0.8 + mouseInfluence * 0.2;
-        const lightness = 0.5 + Math.sin(time + distance * 0.5) * 0.2 + mouseInfluence * 0.3;
+        // Shift hue from base red/orange (0.02) towards hot yellow (0.12) based on mouse proximity
+        const hue = 0.02 + (mouseInfluence * 0.1); 
+        const saturation = 0.8 + (mouseInfluence * 0.2);
+        // Resting lightness varies softly; mouse proximity creates a bright flash for bloom
+        const lightness = 0.3 + (Math.sin(time + distance * 0.5) * 0.15) + (mouseInfluence * 0.5);
         color.setHSL(hue, saturation, lightness);
 
         colors[i3] = color.r;
