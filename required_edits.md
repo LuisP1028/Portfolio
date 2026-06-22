@@ -1,25 +1,15 @@
-# Required Edits: Header Layout Conflict Resolution
+# Required Edits: Modal Stacking Priority
 
 ## Target Files
-1. `/Users/diesel/Portfolio/Portfolio/css/styles.css`
+1. `/Users/diesel/Portfolio/Portfolio/css/modal.css`
 
 ## Step-by-Step Edit Instructions
 
-### 1. Update `header` CSS Rules
-- **Locate**: The `header` block in `styles.css` (around line 41).
+### 1. Elevate Modal Overlay Stacking Context
+- **Locate**: The `.modal-overlay` class block in `css/modal.css` (around line 141).
 - **Modification**: 
-  - Change `z-index: 100;` to `z-index: 10005;` (or a value strictly greater than `.hero-content`'s `10001`). This ensures the sticky header renders above the main page typography rather than underneath it.
-  - Change `background: transparent;` to `background: var(--bg-color);` to provide a solid backing. This prevents the large hero text from bleeding through the header elements when scrolling.
-
-### 2. Adjust `.hero-content` Positioning Constraints (Optional but Recommended)
-- **Locate**: The `.hero-content` block in `styles.css` (around line 80).
-- **Modification**:
-  - Add `padding-top: 2rem;` to ensure there is breathing room between the sticky header and the top of the typography, preventing collision on smaller viewport heights before scrolling even begins.
-
-### 3. Update `header.glass-active` Background (If applicable)
-- **Locate**: The `header.glass-active` block in `styles.css` (around line 51).
-- **Modification**:
-  - Ensure it retains its `backdrop-filter` and dark background. The increased `z-index` from the parent `header` rule will automatically apply here, protecting the glass effect from being overwritten by `.hero-content`.
+  - Change `z-index: 10000;` to `z-index: 100000;`. 
+  - **Reasoning**: The `.hero-content` holds a `z-index` of `10001` and the newly updated sticky `header` holds a `z-index` of `10005`. By elevating `.modal-overlay` to `100000`, the modal system is guaranteed to command absolute supremacy in the viewport stacking context, forcing all background typography and navigation elements firmly behind the modal backdrop.
 
 ## Logical Outcome
-By elevating the header's z-index above the hero content and giving it an opaque or blurred background layer, the header will distinctly float over the page. Any scrolling action will send the "ARCHITECTING DIGITAL SUPERIORITY" text cleanly behind the header, fulfilling the structural constraints defined in `functional_specification.md`.
+With the modal z-index decisively anchored above all other overlapping systems, opening any modal interface will flawlessly blanket the screen. Scrolling while a modal is active will no longer allow the underlying typography to bleed through, fulfilling the `{functionality}` requirements specified.

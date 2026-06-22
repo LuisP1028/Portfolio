@@ -1,16 +1,15 @@
-# Functional Specification: Header Layout Conflict Resolution
+# Functional Specification: Modal Stacking Priority
 
 ## Overview
-This specification details the functionality for resolving a visual layout conflict where the top-left header element overlaps with the primary typography components of the page.
+This specification details the functionality for resolving a z-index stacking conflict where background page elements (such as the main typography and sticky header) visually bleed through and render on top of the active `terminal-modal`.
 
 ## Expected Functionality
 
 ### Visual Presentation and Layout Constraints
-- **Header Separation:** The top-left header element (containing "LUIS_PEREZ // PORTFOLIO SUBMISSION" and its bordered container) must be distinctly separated from the main page content, specifically the large "ARCHITECTING DIGITAL SUPERIORITY" text block.
-- **Overlap Prevention:** The header and the main page typography must be prevented from visually intersecting, clipping into each other, or bleeding together.
-- **Responsiveness:** The clear separation and prevention of visual overlap must be maintained across all screen sizes and across different scroll positions/states.
-- **Structural Integrity:** The layout adjustment must respect the established boundaries of the page components, ensuring that resolving this conflict does not introduce unintended shifting or overlapping of other elements below or adjacent to the typography blocks.
+- **Absolute Stacking Supremacy:** The modal overlay components must assume the absolute highest visual priority on the page when they are invoked.
+- **Obscuring Background Content:** When a modal is active, all underlying page content—including elements with elevated z-indexes such as the `.hero-content` and the `header`—must remain strictly behind the modal's backdrop and content layers.
+- **No Visual Intersections:** Scrolling the page while the modal is open must not cause any underlying text or elements to pierce through the modal's interface.
 
 ### Behavioral Constraints
-- No changes to the textual content or spelling are required.
-- The fundamental layout hierarchy of the page should remain intact, focusing strictly on resolving the collision between these two specific regions of the viewport.
+- No changes to the JavaScript logic controlling the modal toggle state are required.
+- The fundamental layout and design of the modal (borders, background filters, inner content) should remain visually identical, with modifications strictly limited to its structural layering priority within the viewport.
