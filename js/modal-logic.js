@@ -18,6 +18,38 @@ function openTerminal(spaceUrl, useIframe = false) {
     modal.classList.add('active');
 }
 
+function openTerminal04(spaceUrl, useIframe = false) {
+    const modal = document.getElementById('terminal-modal-04');
+    const body = document.getElementById('terminal-body-04');
+
+    body.innerHTML = '';
+
+    if (useIframe) {
+        const frame = document.createElement('iframe');
+        frame.src = spaceUrl;
+        frame.allow = 'clipboard-read; clipboard-write; microphone; camera; fullscreen; autoplay';
+        body.appendChild(frame);
+    } else {
+        const app = document.createElement('gradio-app');
+        app.setAttribute('src', spaceUrl);
+        body.appendChild(app);
+    }
+
+    modal.classList.add('active');
+}
+
+function closeTerminal04() {
+    const modal = document.getElementById('terminal-modal-04');
+    modal.classList.remove('active');
+    
+    setTimeout(() => {
+        document.getElementById('terminal-body-04').innerHTML = '';
+        const headerText = modal.querySelector('.modal-header span');
+        if(headerText) headerText.innerText = ">> REMOTE_LINK_ESTABLISHED // TERMINAL_04";
+    }, 300);
+}
+
+
 async function openMediaModal() {
     const modal = document.getElementById('terminal-modal');
     const body = document.getElementById('terminal-body');
@@ -163,5 +195,8 @@ function closeTerminal() {
 }
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === "Escape") closeTerminal();
+    if (e.key === "Escape") {
+        closeTerminal();
+        if (typeof closeTerminal04 === "function") closeTerminal04();
+    }
 });

@@ -64,8 +64,23 @@ header.glass-active {
 .status-dot { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); animation: pulse 2s infinite; }
 
 /* HERO SECTION */
-.hero { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; border-left: 1px dashed var(--text-dim); margin-left: 20px; padding-left: 40px; position: relative; }
-.hero-content { position: relative; z-index: 10; }
+.hero { 
+    height: 100%; /* REQUIRED: Fixes top: 50% resolution bug in flex containers */
+    min-height: 80vh; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    border-left: 1px dashed var(--text-dim); 
+    margin-left: 20px; 
+    padding-left: 40px; 
+    position: relative; 
+    overflow: hidden; /* REQUIRED: Masks the 200vw tape from bleeding into other sections */
+}
+
+.hero-content { 
+    position: relative; 
+    z-index: 10001; /* REQUIRED: Elevated above Hazard Tape and CRT Overlay */
+}
 .hero::before { content: "ZONE: NORTHEAST CORRIDOR"; position: absolute; top: 20px; left: -12px; background: var(--bg-color); padding: 0 10px; font-size: 0.7rem; transform: rotate(-90deg); transform-origin: left top; color: var(--text-dim); }
 .hero h1 { font-size: clamp(3rem, 8vw, 6rem); line-height: 0.9; margin-bottom: 1rem; text-shadow: 2px 2px 0px var(--text-dim); }
 .hero-sub { font-size: 1.2rem; max-width: 600px; margin-bottom: 3rem; border-left: 4px solid var(--accent); padding-left: 1rem; }

@@ -130,15 +130,25 @@
 
 .hazard-tape-wrapper {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 200vw; /* Oversized to prevent gaps when rotated */
+    
+    /* MODIFIED: Shifted anchors to the bottom-right quadrant */
+    top: 90%;
+    left: 85%;
+    
+    width: 200vw; 
     height: 55px;
     background-color: #ffea00;
     border-top: 4px solid #000000;
     border-bottom: 4px solid #000000;
-    transform: translate(-50%, -50%) rotate(-30deg);
-    z-index: 1; /* Guaranteed to sit above backgrounds */
+    
+    /* MODIFIED: Adjusted rotation angle for corner bleed */
+    /* REQUIRED: 3D Transform and will-change bypass GPU culling bugs */
+    transform: translate3d(-50%, -50%, 0) rotate(-38deg);
+    will-change: transform; 
+    backface-visibility: hidden;
+    
+    z-index: 10000; /* REQUIRED: Elevated above .crt-overlay (9999) */
+    
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -185,7 +195,10 @@
     white-space: nowrap;
     width: max-content;
     animation: tape-scroll 20s linear infinite;
+    
     z-index: 2;
+    position: relative; /* REQUIRED: Activates the z-index to sit above the ::before stripes */
+    flex-shrink: 0; /* REQUIRED: Prevents text from collapsing inside the 200vw flex wrapper */
 }
 
 .hazard-tape-text {
