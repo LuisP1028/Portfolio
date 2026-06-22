@@ -43,8 +43,8 @@ header {
     padding: 1.5rem 0;
     position: sticky; 
     top: 0; 
-    background: transparent;
-    z-index: 100; 
+    background: var(--bg-color);
+    z-index: 10005; 
     transition: all 0.3s ease;
 }
 
@@ -80,6 +80,7 @@ header.glass-active {
 .hero-content { 
     position: relative; 
     z-index: 10001; /* REQUIRED: Elevated above Hazard Tape and CRT Overlay */
+    padding-top: 2rem;
 }
 .hero::before { content: "ZONE: NORTHEAST CORRIDOR"; position: absolute; top: 20px; left: -12px; background: var(--bg-color); padding: 0 10px; font-size: 0.7rem; transform: rotate(-90deg); transform-origin: left top; color: var(--text-dim); }
 .hero h1 { font-size: clamp(3rem, 8vw, 6rem); line-height: 0.9; margin-bottom: 1rem; text-shadow: 2px 2px 0px var(--text-dim); }

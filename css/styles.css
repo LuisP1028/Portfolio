@@ -45,6 +45,7 @@ header {
     top: 0; 
     background: var(--bg-color);
     z-index: 10005; 
+    isolation: isolate;
     transition: all 0.3s ease;
 }
 
