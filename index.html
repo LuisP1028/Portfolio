@@ -11,6 +11,14 @@
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/chatbox.css">
 
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/"
+        }
+    }
+    </script>
     <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/5.8.0/gradio.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -88,6 +96,7 @@
     <main class="container">
 
         <section class="hero">
+            <canvas id="hero-particles"></canvas>
             <div class="hero-content">
                 <p class="text-accent" style="margin-bottom: 10px;">// INITIALIZING SEQUENCE...</p>
                 <h1>Architecting<br>Digital<br><span class="text-accent">Superiority</span></h1>
@@ -372,6 +381,7 @@
     <script src="js/app.js"></script>
     <script src="js/visualizations.js"></script>
     <script src="js/modal-logic.js"></script>
+    <script type="module" src="js/hero-particles.js"></script>
 
 </body>
 
