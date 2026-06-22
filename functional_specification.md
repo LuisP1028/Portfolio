@@ -14,9 +14,10 @@ The goal is to implement a new "card" component and an associated "terminal-moda
 *   **Action Buttons**: At the bottom of the card, a `btn-group` container must be provided. This will house interaction points (buttons or anchor links with the `btn` class) that trigger further actions, such as opening a live demo or viewing source code.
 
 ### Interactivity
+### Interactivity
 *   The action buttons within the card must be capable of invoking JavaScript functions (similar to existing `onclick="openTerminal(...)"` or `onclick="openMediaModal()"` events) to trigger modal windows or route users to external resources.
-*   Specifically, the "LIVE_DEMO" button must trigger the modal and pass the explicitly formatted direct-embed URL: `https://choppedcheese-digitaltwin.hf.space`. 
-*   This URL structure is an absolute architectural requirement to bypass HuggingFace's `X-Frame-Options` blocks, ensuring the iframe properly renders the Docker container within the modal overlay.
+*   **For Docker/HTML Spaces (e.g., OBJ-04):** The button must trigger the modal passing the explicitly formatted direct-embed URL (e.g., `https://choppedcheese-digitaltwin.hf.space`) and a `true` boolean flag to force `<iframe>` rendering, bypassing `X-Frame-Options` blocks.
+*   **For Native Gradio Spaces (e.g., OBJ-02, OBJ-03):** The button must trigger the modal passing the standard directory URL (e.g., `https://huggingface.co/spaces/ChoppedCheese/ChoppedGreeks`). This format is an absolute architectural requirement for the `<gradio-app>` web component API to successfully complete its backend status check.
 
 ## 3. Desired Functionality: Terminal Modal (`terminal-modal`)
 
