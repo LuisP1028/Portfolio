@@ -1,10 +1,9 @@
-# Functional Specification: Hero Background Z-Axis Stacking Fix
+# Functional Specification: Hero Background Full-Bleed Framing Fix
 
 ## Overview
-This document specifies the exact functional behavior required to resolve a layout bug where the Three.js canvas incorrectly renders within the standard document flow, pushing down the hero text content rather than resting behind it as a true background.
+This document specifies the exact functional behavior required to resolve a visual framing issue where a large, empty black void appears between the sticky header and the particle waves inside the hero section.
 
 ## Desired Functionality
-1. **Absolute Background Positioning**: The particle wave visualization (`#hero-particles`) must function strictly as a non-obstructive background element to the `.hero` section. It must be completely removed from the flexbox document flow.
-2. **Z-Axis Hierarchy**: The canvas must be correctly positioned in the Z-axis (via CSS stacking contexts) to guarantee it rests entirely behind `.hero-content` and the `.hazard-tape-wrapper`. 
-3. **Unobstructed Interactivity**: The hero text and "INITIATE_VIEW" buttons (which possess `z-index: 10001`) must sit cleanly above the canvas and remain fully clickable, without the canvas stealing pointer events.
-4. **Cache-Busting Integration**: To guarantee that returning browsers (or the current session) instantly respect the updated CSS positioning rules, the CSS stylesheet linkage must implement a cache-busting query parameter (e.g., `?v=1.1`). This prevents aggressive browser caching from ignoring the newly added absolute positioning rules that take the canvas out of the layout flow.
+1. **Full-Bleed Visual Coverage**: The interactive particle wave visualization must visually span the entire vertical height of the `.hero` section canvas. There must be no awkward empty "sky" space at the top of the section.
+2. **Immersive Camera Framing**: The 3D camera within the Three.js scene must be repositioned and re-angled to frame the particle grid continuously from top to bottom.
+3. **Preservation of Existing Logic**: The camera adjustment must not break or alter the core underlying math for particle positions, wave speeds, bloom physics, or the mouse interaction tracking relative to the canvas.

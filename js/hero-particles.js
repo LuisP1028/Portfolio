@@ -21,9 +21,9 @@ const bloomPass = new UnrealBloomPass(new THREE.Vector2(width, height), 1.5, 0.4
 composer.addPass(renderPass);
 composer.addPass(bloomPass);
 
-// Fixed camera position instead of OrbitControls
-camera.position.set(15, 10, 15);
-camera.lookAt(0, 0, 0);
+// Re-framed camera to push the horizon up and fill the empty top void
+camera.position.set(0, 5, 22);
+camera.lookAt(0, -3, 0);
 
 const params = {
     waveSpeed: 1.0,
