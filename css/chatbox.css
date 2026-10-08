@@ -2,11 +2,13 @@
    VILLAIN_OS CHAT WIDGET STYLES
    ========================================== */
 
-   #chat-widget-container {
+#chat-widget-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 10000;
+    z-index: 50000;
+    isolation: isolate;
+    pointer-events: none;
     font-family: var(--font-mono, monospace);
 }
 
@@ -28,7 +30,8 @@
     justify-content: center;
     align-items: center;
     padding: 0;
-    z-index: 9999; /* Ensures FAB sits above the slide-out tray */
+    z-index: 20; /* Ensures FAB sits above the slide-out tray */
+    pointer-events: auto;
 }
 
 .chat-fab:hover {
@@ -51,12 +54,13 @@
     width: 360px;
     height: 500px;
     max-height: 70vh;
-    background-color: rgba(5, 5, 5, 0.98);
+    background-color: #050505;
     border: 1px solid var(--accent, #ff3c00);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 15px rgba(255, 60, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.95), 0 0 15px rgba(255, 60, 0, 0.15);
     display: flex;
     flex-direction: column;
     backdrop-filter: blur(5px);
+    z-index: 10;
     
     /* Animation Defaults (Hidden) */
     opacity: 0;
@@ -200,9 +204,27 @@
 }
 .chat-transmit-btn:hover { background: var(--accent, #ff3c00); color: #000; }
 
-/* Mobile Responsiveness */
+/* Mobile Responsiveness & Viewport Boundary Guard */
 @media (max-width: 600px) {
-    .chat-container { width: calc(100vw - 40px); right: -10px; }
+    #chat-widget-container {
+        bottom: 15px;
+        right: 15px;
+    }
+    .chat-container { 
+        width: calc(100vw - 30px); 
+        right: 0;
+        bottom: 80px;
+        max-height: calc(100vh - 110px);
+    }
+    .follow-module {
+        right: 75px;
+        max-width: calc(100vw - 100px);
+        padding: 0 10px;
+        gap: 10px;
+    }
+    .follow-label {
+        display: none;
+    }
 }
 
 /* --- THE CALLOUT --- */
@@ -217,7 +239,7 @@
     font-size: 0.75rem;
     text-transform: uppercase;
     padding: 8px 12px;
-    z-index: 10001;
+    z-index: 25;
     pointer-events: none; 
     
     animation: float-bob 2s ease-in-out infinite;
@@ -268,7 +290,7 @@
     bottom: 0; 
     right: 80px; /* Anchors right next to the 65px FAB, plus 15px gap */
     height: 65px; /* Matches FAB height perfectly */
-    background: rgba(5, 5, 5, 0.98);
+    background-color: #050505;
     border: 1px solid var(--accent, #ff3c00);
     padding: 0 15px;
     display: flex;
@@ -276,8 +298,8 @@
     align-items: center;
     gap: 15px;
     backdrop-filter: blur(5px);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.9);
-    z-index: 9998;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.95);
+    z-index: 15;
     
     /* Animation: Hides slightly to the right behind the FAB */
     opacity: 0;
