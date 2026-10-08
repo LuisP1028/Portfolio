@@ -1,0 +1,8 @@
+functional_specification_002.md
+wayfinder/20261008T171503-167-otk6/tickets/ticket-001.md
+wayfinder/20261008T171503-167-otk6/tickets/ticket-002.md
+wayfinder/20261008T171503-167-otk6/tickets/ticket-003.md
+wayfinder/20261008T171503-167-otk6/tickets/ticket-004.md
+wayfinder/20261008T171503-167-otk6/tickets/ticket-005.md
+wayfinder/20261008T171503-167-otk6/map.md
+wayfinder/20261008T171503-167-otk6/matrix.md
