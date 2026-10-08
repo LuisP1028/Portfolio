@@ -1,0 +1,3 @@
+wayfinder/20261008T171503-167-otk6/tickets/ticket-006.md
+wayfinder/20261008T171503-167-otk6/test-matrix.md
+wayfinder/20261008T171503-167-otk6/map.md

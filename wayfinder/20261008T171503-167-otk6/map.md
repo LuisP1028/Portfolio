@@ -5,8 +5,8 @@
 
 **Governing System Glossary:** [`LANGUAGE.md`](../../LANGUAGE.md)  
 **Run Identifier:** `20261008T171503-167-otk6`  
-**Execution Node:** `wayfinder-read-and-plan`  
-**Status:** Canonical Plan Locked; Zero Architectural Ambiguity (Tickets 001–005 Resolved, Master Edit Matrix Synthesized)
+**Execution Node:** `wayfinder-test-plan`  
+**Status:** Canonical Plan & Integration Test Plan Locked; Zero Architectural Ambiguity (Tickets 001–006 Resolved, Master Matrix & Test Matrix Synthesized)
 
 ---
 
@@ -18,6 +18,7 @@ Establish a complete, deterministic, and verified decision set detailing every a
 3. **Multi-Column Grid Breakpoint Dynamics & Card Interior Containment Verification (Ticket 003):** Verify mathematical containment across 4-column desktop layouts (~1250px–1400px), tablet breakpoints, and mobile screens (<768px down to 375px), confirming the longest label pair (`OBJ-01`: `LIVE_DEMO` + `WHITE_PAPER`) reflows cleanly without card boundary bleed.
 4. **Cyberpunk Aesthetic Continuity, Typography Centering & Unified Hit-Target Integrity (Ticket 004):** Normalize typography centering and touch hit targets across `<button>` (modals) and `<a>` (external repositories) while preserving all cyberpunk design tokens, hover glow effects, and event triggers (`openMediaModal()`, `openPDFModal()`, `openTerminal()`, `openTerminal04()`).
 5. **Deterministic Layout Oracles, Viewport Boundary Matrix & Verification Architecture (Ticket 005):** Formalize automated verification checks (`scrollWidth <= clientWidth`, full string length matching, bounding rect containment) across 6 standard viewport presets and 200% zoom.
+6. **Integration Test Decision Mapping, Payload Admissibility Governance & Layout Oracle Verification Plan (Ticket 006):** Formalize authentic codebase schemas (`DOMElementLayoutPayload`, `BoundingClientRectPayload`, `ComputedStylePayload`, `ButtonContentPayload`, `ViewportDimensionPayload`, `ButtonInteractionPayload`), admissible observed payloads with zero mocks (`INV-PAYLOAD-01`), deterministic layout and string oracles (`INV-ASSERTION-01`), explicit failure modes (`{errors}`), and synthesize the Authoritative Integration Test Matrix (`test-matrix.md`).
 
 ---
 
@@ -27,9 +28,9 @@ Establish a complete, deterministic, and verified decision set detailing every a
 - **Core Stylesheet:** [`css/styles.css`](../../css/styles.css)
   - Defines `.grid` (`L103`, `grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;`).
   - Defines `.card` (`L110-L115`, `padding: 1.5rem; background: #0a0a0a;`).
-  - Defines `.btn-group` (`L123`, `display: flex; gap: 1rem; position: relative; z-index: 10;`).
-  - Defines `.btn` and `button.btn` (`L124-L132`, `padding: 0.5rem 1.5rem; overflow: hidden;`).
-  - Defines responsive breakpoint `@media (max-width: 768px)` (`L138-L147`).
+  - Defines `.btn-group` (`L123-L130`, `display: flex; flex-wrap: wrap; gap: 0.6rem; width: 100%; position: relative; z-index: 10;`).
+  - Defines `.btn` and `button.btn` (`L131-L159`, normalized padding `0.5rem 0.75rem`, `white-space: nowrap; min-width: max-content; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; text-align: center; flex: 1 1 auto;`).
+  - Defines responsive breakpoint `@media (max-width: 768px)` (`L172-L181`).
 - **DOM Shell:** [`index.html`](../../index.html)
   - Mounts `#projects` (`L127-L311`).
   - OBJ-04 Card (`L133-L159`): `LIVE_DEMO` (`openTerminal04`) + `SRC_CODE` (Hugging Face).
@@ -52,12 +53,13 @@ $$\text{Inner Card Width} = \text{Card Width} - 2 \times \text{Card Padding} = \
 - **[Ticket 003: Multi-Column Grid Breakpoint Dynamics & Card Interior Containment Verification](./tickets/ticket-003.md)** — Resolved. Proved mathematical containment and stability across 1920px down to 375px viewports and 200% zoom, verifying `.grid` and `.card` structure preservation.
 - **[Ticket 004: Cyberpunk Aesthetic Continuity, Typography Centering & Unified Hit-Target Integrity](./tickets/ticket-004.md)** — Resolved. Unified visual styling, hover glow effects, and hit-target dimensions across `<button>` and `<a>` elements while maintaining 100% fidelity on all modal triggers and external links.
 - **[Ticket 005: Deterministic Layout Oracles, Viewport Boundary Matrix & Verification Architecture](./tickets/ticket-005.md)** — Resolved. Locked 4 layout verification oracles (`scrollWidth <= clientWidth`, string equality, bounding box containment, scrollbar absence) across 6 standard viewport presets and interaction dispatch verification.
+- **[Ticket 006: Integration Test Decision Mapping, Payload Admissibility Governance & Layout Oracle Verification Plan](./tickets/ticket-006.md)** — Resolved. Locked codebase schemas, admissible payloads without mocks (`INV-PAYLOAD-01`), layout/containment/string oracles (`INV-ASSERTION-01`), explicit failure modes, and synthesized the Authoritative Integration Test Matrix (`test-matrix.md`).
 
 ---
 
 ## 4. Not Yet Specified
 
-*(All functional requirements, layout adaptability decisions, and architectural implementation specifications for this run have been charted and fully resolved. Zero fog remains.)*
+*(All functional requirements, layout adaptability decisions, architectural implementation specifications, and integration test verification mappings for this run have been charted and fully resolved. Zero fog remains.)*
 
 ---
 
@@ -67,3 +69,4 @@ $$\text{Inner Card Width} = \text{Card Width} - 2 \times \text{Card Padding} = \
 - Altering the PDF modal viewer or terminal emulation logic.
 - Redesigning card preview canvas/animations (`viz-ssm`, `viz-gex`, `viz-cnn`, video preview).
 - Modifying chatbox widget layering or z-index hierarchy.
+- Authoring executable test code, runners, or test fixtures prior to explicit operator authorization (`INV-BOUNDARY-01`).
