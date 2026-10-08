@@ -5,19 +5,20 @@
 
 **Governing System Glossary:** [`LANGUAGE.md`](../../LANGUAGE.md)  
 **Run Identifier:** `20261008T164831-838-hwjp`  
-**Execution Node:** `wayfinder-read-and-plan`  
-**Status:** Canonical Plan Locked; Zero Architectural Ambiguity (Tickets 001–005 Resolved, Master Component-to-Edit Matrix Synthesized)
+**Execution Node:** `wayfinder-read-and-plan` & `wayfinder-test-plan`  
+**Status:** Canonical Plan & Integration Test Architecture Locked; Zero Ambiguity (Tickets 001–006 Resolved, Master Edit & Test Matrices Synthesized)
 
 ---
 
 ## 1. Destination
 
-Establish a complete, deterministic, and verified decision set detailing every architectural, visual layering, and code edit required across the codebase to implement the foreground dominance and clipping prevention functionality specified in [`functional_specification_001.md`](../../functional_specification_001.md) without invention:
+Establish a complete, deterministic, and verified decision set detailing every architectural, visual layering, code edit, and integration test requirement across the codebase to implement and verify the foreground dominance and clipping prevention functionality specified in [`functional_specification_001.md`](../../functional_specification_001.md) without invention:
 1. **Global Stacking Context & Z-Index Architecture (Ticket 001):** Establish a 5-tier global stacking hierarchy that places `#chat-widget-container` in Tier 3 (`z-index: 50000; isolation: isolate;`), dominating sticky navigation (`z-index: 10005`) and hero headlines (`z-index: 10001`), while subordinating to full-screen modals (`z-index: 100000`).
 2. **Surface Opacity & Graphic Bleed Prevention (Ticket 002):** Convert `.chat-container` and `.follow-module` backgrounds from translucent `rgba(5, 5, 5, 0.98)` to 100% opaque `#050505` (`var(--bg-color)`), ensuring zero bleed-through from underlying typography, hazard tape ribbons, or particle canvas.
 3. **Internal Component Layering & Interaction Integrity (Ticket 003):** Establish normalized internal z-index ordering inside `#chat-widget-container` (`.chat-container` at 10, `.follow-module` at 15, `.chat-fab` at 20, `#chat-callout` at 25) with pointer-event partitioning (`pointer-events: none` on container, `pointer-events: auto` on interactive elements) eliminating click dead zones.
 4. **Scrolling & Sticky Header Overlap Dynamics (Ticket 004):** Lock fixed viewport coordinates, smooth vertical scrolling persistence, sticky header overlay precedence, and mobile responsive boundaries (`@media (max-width: 600px)`).
 5. **Full-Screen Modal Hierarchy & Focus Governance (Ticket 005):** Validate that full-screen modals (`.modal-overlay` at `z-index: 100000`) cleanly supersede the chatbox on demand, capturing full pointer focus and returning cleanly on dismissal.
+6. **Integration Test Decision Mapping & Verification Architecture (Ticket 006):** Define comprehensive integration verification across 6 test suites grounded exclusively in real codebase schemas (`ComputedStylePayload`, `DOMElementState`, `CoordinateHitTestPayload`, `ChatMessagePayload`), locking deterministic hit-testing and computed style oracles without synthetic mocks or dummy data.
 
 ---
 
@@ -43,17 +44,19 @@ $$\text{Tier 0 (Canvas/Grid: -1 to 10)} < \text{Tier 1 (Atmosphere: 9999 to 1000
 - **[Ticket 003: Internal Stacking & Layout Dynamics for FAB, Follow Tray & Callout Prompt](./tickets/ticket-003.md)** — Resolved. Normalized internal z-index hierarchy (`.chat-container`: 10, `.follow-module`: 15, `.chat-fab`: 20, `#chat-callout`: 25) and locked pointer-event partitioning (`pointer-events: none` on container, `pointer-events: auto` on interactive controls) to guarantee zero click dead zones.
 - **[Ticket 004: Scrolling, Sticky Header Overlap & Viewport Persistence Invariants](./tickets/ticket-004.md)** — Resolved. Locked fixed viewport persistence across all vertical scroll offsets, clean precedence over the sticky header during 150%+ zoom, and mobile responsive boundaries (`@media (max-width: 600px)`).
 - **[Ticket 005: Full-Screen Modal Overlay Precedence & Focus Governance](./tickets/ticket-005.md)** — Resolved. Locked Tier 4 modal supremacy (`.modal-overlay` at `z-index: 100000`), guaranteeing active terminals and white paper viewers take complete visual and focus precedence over the chatbox without visual clipping or event leakage.
+- **[Ticket 006: Integration Test Decision Mapping, Payload Admissibility Governance & Oracle Verification Plan](./tickets/ticket-006.md)** — Resolved. Mapped integration test architecture across 6 test suites with 100% schema fidelity against active codebase interfaces (`ComputedStylePayload`, `DOMElementState`, `CoordinateHitTestPayload`, `ChatMessagePayload`), defined deterministic hit-testing and computed style oracles, established explicit failure states (`{errors}`), and enforced strict "DO NOT CODE YET" gate (`INV-BOUNDARY-01`) with zero mocks.
 
 ---
 
 ## 4. Not Yet Specified
 
-*(All functional requirements and architectural decisions for this run have been charted and fully resolved. Zero fog remains.)*
+*(All functional requirements, architectural implementation decisions, and integration test specifications for this run have been charted and fully resolved. Zero fog remains.)*
 
 ---
 
 ## 5. Out of Scope
 
+- Writing executable test code, mock servers, synthetic fixtures, or runner scripts prior to explicit operator authorization (`INV-BOUNDARY-01`).
 - Modifying the underlying backend API endpoint (`https://choppedcheese-platodoomcave.hf.space/chat`) or alteration of the Pydantic chat message schema.
 - Redesigning the hero typography font families (`Chakra Petch`, `JetBrains Mono`) or altering hero layout proportions.
 - Refactoring independent project modal implementations (Gradio iframe loading, PDF.js rendering pipeline).
