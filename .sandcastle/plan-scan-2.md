@@ -1,7 +1,7 @@
 ---
 name: wayfinder-plan-scan-2
 hostname: local-workspace
-description: Authoritative Wayfinder static codebase scan and dependency cone enumeration skill for the planning node (plan-scan-2, Agent 2); binds strictly to the single specification at {{SEED_PATH}} (derived from GitHub Issue #{{RUN_ID}}), conducts exhaustive deterministic scans of the codebase to identify every component touching required functionality without guessing, sampling, or proposing implementations, records absences without inventing components, and posts the component manifest to GitHub Issue #{{RUN_ID}}.
+description: Authoritative Wayfinder static codebase scan and dependency cone enumeration skill for the planning node (plan-scan-2, Agent 2); binds strictly to the specification fetched from GitHub Issue #{{RUN_ID}}, conducts exhaustive deterministic scans of the codebase to identify every component touching required functionality without guessing, sampling, or proposing implementations, records absences without inventing components, and posts the component manifest to GitHub Issue #{{RUN_ID}}.
 disable-model-invocation: true
 ---
 
@@ -10,13 +10,9 @@ disable-model-invocation: true
 Role: planning node (plan-scan-2, Agent 2).  
 Perform a deterministic static scan of the codebase. Do not write code. Do not propose an implementation.
 
-## Upstream Functional Specification Seed
+## Upstream Functional Specification (GitHub Issue #{{RUN_ID}})
 
-{{SEED_PATH}}
-
-## Upstream Functional Specification Contents
-
-!`cat {{SEED_PATH}}`
+!`gh issue view {{RUN_ID}} --json title,body --jq '"# " + .title + "\n\n" + .body'`
 
 ## Visual assets
 
@@ -29,8 +25,8 @@ This agent opens a named image and does not generate one.
 ## Static Scan & Dependency Cone Enumeration Instructions
 
 1. **Deterministic Upstream Ingestion:**
-   - This scan binds strictly to the single specification at `{{SEED_PATH}}` (GitHub Issue #{{RUN_ID}}). Open and read that path directly.
-   - Do not perform unmanaged directory scanning across `specs/`. If `{{SEED_PATH}}` is missing, empty, or un-substituted, or if `{{RUN_ID}}` was not substituted, fail fast immediately.
+   - This scan binds strictly to the specification fetched from GitHub Issue #{{RUN_ID}}.
+   - Do not perform unmanaged directory scanning across `specs/`. If `{{RUN_ID}}` is missing, empty, or un-substituted, fail fast immediately.
 2. **Component Qualification Gate:**
    - A component qualifies for review if and only if **both** of the following conditions are true:
      - The scan found it in the codebase, and it is named as the codebase names it.
@@ -56,7 +52,7 @@ EOF
 
 ## 1. Critical Alignment & Loading Hierarchy
 
-1. **The single specification in scope at `{{SEED_PATH}}`:** Desired `{functionality}` only.
+1. **The single specification in scope from GitHub Issue #{{RUN_ID}}:** Desired `{functionality}` only.
 2. **The Wayfinder Map (`wayfinder/{{RUN_ID}}/map.md`) and its Ticket Files (`wayfinder/{{RUN_ID}}/tickets/`).**
 3. **[`LANGUAGE.md`](file:///Users/diesel/Desktop/POLYMARKET/LANGUAGE.md):** Strict definitions of `{errors}`, `{correctness}`, `{functionality}`, `{correct required outputs}`, `{sufficient}`, and `{insufficient}`.
 

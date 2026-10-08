@@ -1,7 +1,7 @@
 ---
 name: wayfinder-read-and-plan
 hostname: local-workspace
-description: Authoritative Wayfinder feature-planning orchestration skill for the planning node; consumes exclusively the seed specification at {{SEED_PATH}} (derived from GitHub Issue #{{RUN_ID}}), deconstructs requirements into discrete architectural decision tickets in wayfinder/{{RUN_ID}}/tickets/ using /wayfinder, writes maps to wayfinder/{{RUN_ID}}/map.md, and posts the authoritative planning manifest as a tagged comment on GitHub Issue #{{RUN_ID}} without writing application code.
+description: Authoritative Wayfinder feature-planning orchestration skill for the planning node; consumes exclusively the specification fetched directly from GitHub Issue #{{RUN_ID}}, deconstructs requirements into discrete architectural decision tickets in wayfinder/{{RUN_ID}}/tickets/ using /wayfinder, writes maps to wayfinder/{{RUN_ID}}/map.md, and posts the authoritative planning manifest as a tagged comment on GitHub Issue #{{RUN_ID}} without writing application code.
 disable-model-invocation: true
 ---
 # /wayfinder-read-and-plan: Functional Specification Ingestion, Architectural Decision Mapping, and Edit Planning Governance
@@ -9,13 +9,9 @@ disable-model-invocation: true
 Role: planning node (feature-planning meta-prompt).  
 This invocation is strictly **`read-and-plan`**. Do not write implementation code in this session.
 
-## Upstream Functional Specification Seed
+## Upstream Functional Specification (GitHub Issue #{{RUN_ID}})
 
-{{SEED_PATH}}
-
-## Upstream Functional Specification Contents
-
-!`cat {{SEED_PATH}}`
+!`gh issue view {{RUN_ID}} --json title,body --jq '"# " + .title + "\n\n" + .body'`
 
 ## Visual assets
 
@@ -30,8 +26,8 @@ This agent opens a named image and does not generate one.
 ## Feature Planning & Handoff Manifest Instructions
 
 1. **Deterministic Upstream Specification Ingestion:**
-   - The agent consumes exclusively the single specification path provided in `{{SEED_PATH}}` (interpolated from GitHub Issue #{{RUN_ID}}).
-   - Do not perform unmanaged directory scanning across `specs/` or look for legacy text manifests. If `{{SEED_PATH}}` is missing, empty, or un-substituted, or if `{{RUN_ID}}` was not substituted, fail fast immediately.
+   - The agent consumes exclusively the specification fetched directly from GitHub Issue #{{RUN_ID}}.
+   - Do not perform unmanaged directory scanning across `specs/` or look for legacy text manifests. If `{{RUN_ID}}` is missing, empty, or un-substituted, fail fast immediately.
 2. **Architectural Decision Ticket Creation (`wayfinder/{{RUN_ID}}/tickets/ticket-NNNN.md`):**
    - Deconstruct the specification into discrete, atomic decision tickets in `wayfinder/{{RUN_ID}}/tickets/` using the next monotonically increasing counters (`ticket-NNNN.md`).
    - The ticket counter is the next number inside that run directory (`wayfinder/{{RUN_ID}}/tickets/`), starting at `ticket-001.md`.
@@ -41,7 +37,7 @@ This agent opens a named image and does not generate one.
 3. **Handoff Manifest Generation & GitHub Issue Posting:**
    - Write the exact list of authored file paths to `.sandcastle/tmp/plan-manifest-{{RUN_ID}}.txt`.
    - The manifest content must contain exclusively:
-     - `{{SEED_PATH}}` (and any refined spec authored during this run under `{{RUN_ID}}`)
+     - Any refined spec authored during this run under `{{RUN_ID}}`
      - Every decision ticket created in `wayfinder/{{RUN_ID}}/tickets/`
      - `wayfinder/{{RUN_ID}}/map.md`
      - The Master Component-to-Edit Matrix file
@@ -62,7 +58,7 @@ EOF
 ## 1. Critical Alignment & Standard Taxonomy
 - **CRITICAL ALIGNMENT:** Review and strictly adopt the system glossary defined in [`LANGUAGE.md`](file:///Users/diesel/Desktop/POLYMARKET/LANGUAGE.md).
 - **AUTHORITATIVE SPECIFICATION MANDATE:**
-  - The specification file ingested from `{{SEED_PATH}}` constitutes the authoritative product law and planning artifact for this effort.
+  - The specification fetched from GitHub Issue #{{RUN_ID}} constitutes the authoritative product law and planning artifact for this effort.
   - This prompt governs the feature planning phase: identifying, deconstructing, and locking every architectural, schema, and algorithmic decision required to implement the specification.
   - Tickets must resolve what the specification leaves open or requires to align with existing systems without inventing unapproved behaviors or contradicting the specification.
 
@@ -74,7 +70,7 @@ Throughout this workflow, every assessment of `{errors}`, `{correctness}`, `{fun
   - Ticket collision, non-monotonic ticket numbering, or circular blocking dependencies in the wayfinder DAG (`INV-MAP-01`).
   - Misalignment between the functional specification and system requirements detected during understanding checks (`INV-ALIGN-01`).
   - Writing application code during this session, or including coding prohibitions and execution holds in generated planning files (`INV-BOUNDARY-01`).
-  - Missing, empty, or un-substituted `{{SEED_PATH}}` or `{{RUN_ID}}`.
+  - Missing, empty, or un-substituted `{{RUN_ID}}`.
   - Silent exception handling, empty fallbacks, or temporary patch hacks.
 - **`{correctness}`**: Precise local logic, schema alignment, and contract fidelity:
   - Exact relational key, column name, and data type alignment between proposed edits and persistent stores, database schemas, or state contracts.

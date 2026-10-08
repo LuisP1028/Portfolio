@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync } from "node:fs";
 import { run } from "@ai-hero/sandcastle";
 import type { AgentProvider } from "@ai-hero/sandcastle";
 import { noSandbox } from "@ai-hero/sandcastle/sandboxes/no-sandbox";
@@ -233,17 +233,10 @@ async function runWithLockRetry(
 
 const issues = fetchQueuedIssues();
 mkdirSync(".sandcastle/logs", { recursive: true });
-mkdirSync(".sandcastle/issues", { recursive: true });
 mkdirSync(".sandcastle/tmp", { recursive: true });
 
 for (const issue of issues) {
     const runId = String(issue.number);
-    const seedPath = `.sandcastle/issues/issue-${runId}.md`;
-    writeFileSync(
-        seedPath,
-        `# Issue #${runId}: ${issue.title}\n\n${issue.body || "No specification body provided."}\n`,
-        "utf8",
-    );
 
     const planBranch = `agent/plan-${runId}`;
     const scanBranch1 = `agent/plan-scan-1-${runId}`;
@@ -288,7 +281,7 @@ for (const issue of issues) {
                     agent: antigravity(agent.model),
                     sandbox: noSandbox(),
                     promptFile: agent.promptFile,
-                    promptArgs: { BRANCH: agent.branch, RUN_ID: runId, SEED_PATH: seedPath },
+                    promptArgs: { BRANCH: agent.branch, RUN_ID: runId },
                     branchStrategy: { type: "branch", branch: agent.branch },
                     logging: fileLog(agent.name),
                     idleTimeoutSeconds: IDLE_TIMEOUT_SECONDS,
@@ -334,7 +327,7 @@ for (const issue of issues) {
                 agent: antigravity(step.model),
                 sandbox: noSandbox(),
                 promptFile: step.promptFile,
-                promptArgs: { BRANCH: planBranch, RUN_ID: runId, SEED_PATH: seedPath },
+                promptArgs: { BRANCH: planBranch, RUN_ID: runId },
                 branchStrategy: { type: "branch", branch: planBranch },
                 logging: fileLog(step.name),
                 idleTimeoutSeconds: IDLE_TIMEOUT_SECONDS,

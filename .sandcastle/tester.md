@@ -10,9 +10,9 @@ disable-model-invocation: true
 Role: test-plan meta prompt (tester planning node).  
 This invocation is strictly **`read-and-plan`**. Do not write tests in this session.
 
-## Upstream Seed Specification Path
+## Upstream Functional Specification (GitHub Issue #{{RUN_ID}})
 
-{{SEED_PATH}}
+!`gh issue view {{RUN_ID}} --json title,body --jq '"# " + .title + "\n\n" + .body'`
 
 ## Upstream Issue Comments & Manifests
 

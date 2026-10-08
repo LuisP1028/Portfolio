@@ -11,13 +11,9 @@ Role: reviewer. Review the files this run named. Do not review the entire reposi
 
 A clarity edit may change how a named file reads. It must not change what that file does.
 
-## Upstream Functional Specification Seed
+## Upstream Functional Specification (GitHub Issue #{{RUN_ID}})
 
-{{SEED_PATH}}
-
-## Upstream Functional Specification Contents
-
-!`cat {{SEED_PATH}}`
+!`gh issue view {{RUN_ID}} --json title,body --jq '"# " + .title + "\n\n" + .body'`
 
 ## Upstream Issue Comments & Manifests
 
