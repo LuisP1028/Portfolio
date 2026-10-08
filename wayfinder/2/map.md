@@ -6,8 +6,8 @@
 
 **Governing System Glossary:** [`LANGUAGE.md`](../../LANGUAGE.md)  
 **Run Identifier:** `2`  
-**Execution Node:** `wayfinder-read-and-plan`  
-**Status:** Canonical Plan Locked; Zero Architectural Ambiguity (Tickets 001–004 Resolved, Master Matrix Synthesized)
+**Execution Node:** `wayfinder-test-plan`  
+**Status:** Canonical Plan & Integration Test Plan Locked; Zero Architectural Ambiguity (Tickets 001–005 Resolved, Master Matrix & Test Matrix Synthesized)
 
 ---
 
@@ -18,6 +18,7 @@ Establish a complete, deterministic, and verified decision set detailing every f
 2. **Modular Component File Lifecycle and Deletion of `card-cnn.html` (Ticket 002):** Delete the standalone component template `components/cards/card-cnn.html` from the repository filesystem (`git rm`), ensuring no dead component files remain.
 3. **Pruning Dedicated VIZ-03 Kernel Scanner CSS Rules from Stylesheets (Ticket 003):** Prune the dedicated `/* VIZ-03: CNN KERNEL SCANNER */` CSS rules and `@keyframes cnn-stride` from `css/animations.css` and `css/modal.css` without disrupting adjacent styles or animations.
 4. **Deterministic Verification Oracles and System Integrity Checks for CNN OBJ Removal (Ticket 004):** Formalize deterministic assertions checking DOM absence, component template deletion, keyword eradication, preservation of the 3 remaining cards, stylesheet pruning, and repository non-regression.
+5. **Integration Test Decision Mapping, Payload Admissibility Governance & Verification Architecture for CNN OBJ Removal (Ticket 005):** Formalize authentic codebase schemas (`DOMTreePayload`, `FileStatPayload`, `StylesheetContentPayload`, `ContentSearchPayload`, `GitWorkingTreePayload`, `PipelineManifestPayload`), admissible observed payloads under Payload Law with zero mocks (`INV-PAYLOAD-01`), deterministic verification oracles (`INV-ASSERTION-01`), explicit failure modes (`{errors}`), and synthesize the Authoritative Integration Test Matrix (`test-matrix.md`).
 
 ---
 
@@ -30,8 +31,9 @@ Establish a complete, deterministic, and verified decision set detailing every f
   - `css/animations.css` (lines 50–59): Dedicated `.viz-cnn` and `@keyframes cnn-stride` rules.
   - `css/modal.css` (lines 50–59): Duplicate `.viz-cnn` and `@keyframes cnn-stride` rules.
 - **Current Workspace State:**
-  - The projects grid hosts 4 cards: `OBJ-04`, `OBJ-01`, `OBJ-02`, and `OBJ-03`.
-  - The responsive CSS grid layout rule `.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 4rem; }` automatically balances remaining cards when one is removed.
+  - The CNN OBJ section has been completely excised across `index.html`, `components/cards/card-cnn.html`, `css/animations.css`, and `css/modal.css`.
+  - The projects grid hosts strictly 3 cards: `OBJ-04`, `OBJ-01`, and `OBJ-02`.
+  - The responsive CSS grid layout rule `.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 4rem; }` automatically balances the 3 remaining cards.
 - **Pipeline Integration:**
   - Subsequent pipeline nodes (`scanners`, `implementer`, `reviewer`, `tester`, `merger`) discover planned tickets, maps, and target components via the bounded manifest comment on GitHub Issue #2.
 
@@ -42,7 +44,9 @@ Establish a complete, deterministic, and verified decision set detailing every f
 - **`INV-PRESERVE-REMAINING`:** Preservation of identifiers, markup, and functionality for `OBJ-04`, `OBJ-01`, and `OBJ-02`.
 - **`INV-GRID-INTEGRITY`:** Preservation of valid `.grid` container closing tags.
 - **`INV-ZERO-REGRESSION`:** Codebase modifications are strictly bounded to the authorized target files.
-- **`INV-VERIFY-ORACLE`:** All assertions evaluate deterministically against specification oracles.
+- **`INV-PAYLOAD-01`:** Only authentic codebase schemas and live telemetry are admissible. Zero mocks.
+- **`INV-ASSERTION-01`:** All assertions evaluate deterministically against specification oracles.
+- **`INV-BOUNDARY-01`:** Strict "DO NOT CODE YET" gate enforced prior to authorization.
 
 ---
 
@@ -52,12 +56,13 @@ Establish a complete, deterministic, and verified decision set detailing every f
 - **[Ticket 002: Modular Component File Lifecycle and Deletion of card-cnn.html](./tickets/ticket-002.md)** — Resolved. Locked permanent deletion of `components/cards/card-cnn.html` from repository filesystem.
 - **[Ticket 003: Pruning Dedicated VIZ-03 Kernel Scanner CSS Rules from Stylesheets](./tickets/ticket-003.md)** — Resolved. Locked pruning of `/* VIZ-03: CNN KERNEL SCANNER */` block (lines 50–59) from both `css/animations.css` and `css/modal.css`.
 - **[Ticket 004: Deterministic Verification Oracles and System Integrity Checks for CNN OBJ Removal](./tickets/ticket-004.md)** — Resolved. Locked 6 deterministic verification oracles (DOM absence, file deletion, keyword eradication, card count strictly 3, CSS dead-code pruning, repo non-regression).
+- **[Ticket 005: Integration Test Decision Mapping, Payload Admissibility Governance & Verification Architecture for CNN OBJ Removal](./tickets/ticket-005.md)** — Resolved. Locked authentic codebase schemas, admissible observed payloads without mocks (`INV-PAYLOAD-01`), deterministic verification oracles (`INV-ASSERTION-01`), explicit failure modes (`{errors}`), and synthesized the Authoritative Integration Test Matrix (`test-matrix.md`).
 
 ---
 
 ## 4. Not Yet Specified
 
-*(All functional requirements, file transformation specifications, verification oracles, and integration decisions for this run have been charted and fully resolved. Zero fog remains.)*
+*(All functional requirements, file transformation specifications, verification oracles, and integration test decision mappings for this run have been charted and fully resolved. Zero fog remains.)*
 
 ---
 
@@ -66,3 +71,4 @@ Establish a complete, deterministic, and verified decision set detailing every f
 - Renumbering or altering the identifiers of remaining project cards (`OBJ-04`, `OBJ-01`, `OBJ-02`).
 - Modifying interactive modal handlers, chatbox widget scripts, or Three.js hero animations.
 - Modifying Sandcastle pipeline scripts or workflow configurations under `.sandcastle/`.
+- Authoring executable test code, test fixtures, parsers, or mock files prior to explicit operator authorization (`INV-BOUNDARY-01`).
