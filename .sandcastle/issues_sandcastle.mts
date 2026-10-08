@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { run } from "@ai-hero/sandcastle";
 import type { AgentProvider } from "@ai-hero/sandcastle";
 import { noSandbox } from "@ai-hero/sandcastle/sandboxes/no-sandbox";
@@ -8,19 +8,18 @@ import { noSandbox } from "@ai-hero/sandcastle/sandboxes/no-sandbox";
 // Do not set GEMINI_API_KEY or modelProvider=gemini. That switches off Ultra.
 // Run with: npx tsx .sandcastle/plan-skill-implement-review-test-merge.mts
 //
-// handoff/authored.txt must already be committed on main.
+// GitHub Issues State Machine:
+// Each open issue labeled 'sandcastle:queued' is an isolated seed run sequentially.
+// Issue Number serves as {{RUN_ID}}.
 // Start this script from main. The merger runs in that folder.
-// One registered specification path is one seed. Seeds run one at a time.
-// Each seed is plan and both scans, implement, review, test, then merge.
-// The next seed is copied from the open project after that merge.
-// Each run uses new branch names, so old copies are not reopened.
-// The merger joins this run into the open project. Do not pass TARGET_BRANCH.
 // Model slugs come from `agy models`. A display name fails the run.
 // Within one seed, the planner and both scanners stay parallel.
 // A ~/.gitconfig lock is retried, not treated as failure.
 // Each run waits 25 minutes of silence before Sandcastle's idle timeout fires.
 
 const IDLE_TIMEOUT_SECONDS = 25 * 60;
+const QUEUED_LABEL = "sandcastle:queued";
+const COMPLETED_LABEL = "sandcastle:completed";
 
 function shellQuote(value: string): string {
     return `'${value.replace(/'/g, `'\\''`)}'`;
@@ -187,32 +186,23 @@ function mergeInto(branch: string, fromBranch: string) {
     }
 }
 
-function readSeeds(path: string): string[] {
-    if (!existsSync(path)) {
-        throw new Error(`${path} is missing. No run starts.`);
-    }
-    const seeds = readFileSync(path, "utf8")
-        .split("\n")
-        .map((line) => line.trim())
-        .filter((line) => line.length > 0);
-    if (seeds.length === 0) {
-        throw new Error(`${path} is empty. No run starts.`);
-    }
-    const seen = new Set<string>();
-    for (const seed of seeds) {
-        if (seen.has(seed)) {
-            throw new Error(`duplicate seed ${seed}. No run starts.`);
-        }
-        seen.add(seed);
-        if (!existsSync(seed)) {
-            throw new Error(`missing seed ${seed}. No run starts.`);
-        }
-    }
-    return seeds;
+interface GitHubIssue {
+    number: number;
+    title: string;
+    body: string;
 }
 
-function mintRunId(): string {
-    return `${new Date().toISOString().replace(/[-:]/g, "").replace(/\..+$/, "")}-${String(Date.now() % 1000).padStart(3, "0")}-${Math.random().toString(36).slice(2, 6)}`;
+function fetchQueuedIssues(): GitHubIssue[] {
+    const raw = execFileSync(
+        "gh",
+        ["issue", "list", "--state", "open", "--label", QUEUED_LABEL, "--json", "number,title,body"],
+        { encoding: "utf8" },
+    );
+    const parsed = JSON.parse(raw) as GitHubIssue[];
+    if (parsed.length === 0) {
+        throw new Error(`No open issues found with label '${QUEUED_LABEL}'. No run starts.`);
+    }
+    return parsed;
 }
 
 function assertClean(planBranch: string) {
@@ -241,16 +231,25 @@ async function runWithLockRetry(
     throw new Error(`${name} (${branch}) failed after git config retries`);
 }
 
-const seeds = readSeeds("handoff/authored.txt");
+const issues = fetchQueuedIssues();
 mkdirSync(".sandcastle/logs", { recursive: true });
+mkdirSync(".sandcastle/issues", { recursive: true });
+mkdirSync(".sandcastle/tmp", { recursive: true });
 
-for (const seed of seeds) {
-    const runId = mintRunId();
+for (const issue of issues) {
+    const runId = String(issue.number);
+    const seedPath = `.sandcastle/issues/issue-${runId}.md`;
+    writeFileSync(
+        seedPath,
+        `# Issue #${runId}: ${issue.title}\n\n${issue.body || "No specification body provided."}\n`,
+        "utf8",
+    );
+
     const planBranch = `agent/plan-${runId}`;
     const scanBranch1 = `agent/plan-scan-1-${runId}`;
     const scanBranch2 = `agent/plan-scan-2-${runId}`;
     const base = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
-    console.log(`seed ${seed} from ${base}`);
+    console.log(`Starting run for Issue #${runId} (${issue.title}) from base commit ${base}`);
 
     function fileLog(name: string) {
         return {
@@ -289,7 +288,7 @@ for (const seed of seeds) {
                     agent: antigravity(agent.model),
                     sandbox: noSandbox(),
                     promptFile: agent.promptFile,
-                    promptArgs: { BRANCH: agent.branch, RUN_ID: runId, SEED_PATH: seed },
+                    promptArgs: { BRANCH: agent.branch, RUN_ID: runId, SEED_PATH: seedPath },
                     branchStrategy: { type: "branch", branch: agent.branch },
                     logging: fileLog(agent.name),
                     idleTimeoutSeconds: IDLE_TIMEOUT_SECONDS,
@@ -301,7 +300,7 @@ for (const seed of seeds) {
     for (const [index, result] of settled.entries()) {
         const agent = parallel[index];
         if (result.status === "rejected") {
-            throw new Error(`${agent.name} (${agent.branch}) failed for ${seed}. Later seeds do not start.`, {
+            throw new Error(`${agent.name} (${agent.branch}) failed for Issue #${runId}. Later issues do not start.`, {
                 cause: result.reason,
             });
         }
@@ -335,7 +334,7 @@ for (const seed of seeds) {
                 agent: antigravity(step.model),
                 sandbox: noSandbox(),
                 promptFile: step.promptFile,
-                promptArgs: { BRANCH: planBranch, RUN_ID: runId, SEED_PATH: seed },
+                promptArgs: { BRANCH: planBranch, RUN_ID: runId, SEED_PATH: seedPath },
                 branchStrategy: { type: "branch", branch: planBranch },
                 logging: fileLog(step.name),
                 idleTimeoutSeconds: IDLE_TIMEOUT_SECONDS,
@@ -357,7 +356,27 @@ for (const seed of seeds) {
     );
     console.log(`merger (${planBranch}) commits: ${merger.commits.length}`);
     assertClean(planBranch);
-    console.log(`joined ${planBranch} for ${seed}`);
+    console.log(`Joined ${planBranch} for Issue #${runId}`);
+
+    // Update Issue state
+    execFileSync("gh", [
+        "issue",
+        "edit",
+        runId,
+        "--remove-label",
+        QUEUED_LABEL,
+        "--add-label",
+        COMPLETED_LABEL,
+    ]);
+    execFileSync("gh", [
+        "issue",
+        "close",
+        runId,
+        "--comment",
+        `Resolved and merged via Sandcastle pipeline on branch ${planBranch}.`,
+    ]);
+    console.log(`Closed and transitioned Issue #${runId}`);
 }
 
-console.log(`joined ${seeds.length} plan branch(es)`);
+console.log(`Completed ${issues.length} issue(s)`);
+
