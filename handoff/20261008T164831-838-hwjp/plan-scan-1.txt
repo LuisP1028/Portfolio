@@ -1,0 +1,10 @@
+components/global/chat-widget.html
+css/animations.css
+css/chatbox.css
+css/modal.css
+css/styles.css
+index.html
+js/app.js
+js/chat-widget.js
+js/hero-particles.js
+js/modal-logic.js
