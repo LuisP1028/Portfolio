@@ -1,0 +1,8 @@
+functional_specification_001.md
+wayfinder/20261008T164831-838-hwjp/tickets/ticket-001.md
+wayfinder/20261008T164831-838-hwjp/tickets/ticket-002.md
+wayfinder/20261008T164831-838-hwjp/tickets/ticket-003.md
+wayfinder/20261008T164831-838-hwjp/tickets/ticket-004.md
+wayfinder/20261008T164831-838-hwjp/tickets/ticket-005.md
+wayfinder/20261008T164831-838-hwjp/map.md
+wayfinder/20261008T164831-838-hwjp/matrix.md
