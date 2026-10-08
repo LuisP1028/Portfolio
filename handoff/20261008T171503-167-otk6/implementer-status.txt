@@ -1,0 +1,7 @@
+css/styles.css CHANGED ticket-001
+css/styles.css CHANGED ticket-002
+css/styles.css UNCHANGED ticket-003
+css/styles.css CHANGED ticket-004
+index.html UNCHANGED ticket-001
+index.html UNCHANGED ticket-004
+index.html UNCHANGED ticket-005
