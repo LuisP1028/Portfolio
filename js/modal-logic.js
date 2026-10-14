@@ -49,6 +49,47 @@ function closeTerminal04() {
     }, 300);
 }
 
+function openTerminal200(spaceUrl, useIframe = true) {
+    const modal = document.getElementById('terminal-modal-200');
+    const body = document.getElementById('terminal-body-200');
+
+    if (!modal || !body) {
+        throw new Error('Fatal Error: #terminal-modal-200 or #terminal-body-200 missing from DOM.');
+    }
+
+    body.innerHTML = '';
+
+    if (useIframe) {
+        const frame = document.createElement('iframe');
+        frame.src = spaceUrl;
+        frame.allow = 'clipboard-read; clipboard-write; microphone; camera; fullscreen; autoplay';
+        body.appendChild(frame);
+    } else {
+        const app = document.createElement('gradio-app');
+        app.setAttribute('src', spaceUrl);
+        body.appendChild(app);
+    }
+
+    modal.classList.add('active');
+}
+
+function closeTerminal200() {
+    const modal = document.getElementById('terminal-modal-200');
+    const body = document.getElementById('terminal-body-200');
+
+    if (!modal || !body) {
+        throw new Error('Fatal Error: #terminal-modal-200 or #terminal-body-200 missing from DOM.');
+    }
+
+    modal.classList.remove('active');
+
+    setTimeout(() => {
+        body.innerHTML = '';
+        const headerText = modal.querySelector('.modal-header span');
+        if (headerText) headerText.innerText = ">> REMOTE_LINK_ESTABLISHED // TERMINAL_200";
+    }, 300);
+}
+
 
 async function openMediaModal() {
     const modal = document.getElementById('terminal-modal');
@@ -198,5 +239,6 @@ document.addEventListener('keydown', (e) => {
     if (e.key === "Escape") {
         closeTerminal();
         if (typeof closeTerminal04 === "function") closeTerminal04();
+        if (typeof closeTerminal200 === "function") closeTerminal200();
     }
 });
