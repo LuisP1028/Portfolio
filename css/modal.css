@@ -40,13 +40,6 @@
 @keyframes ssm-dash { to { stroke-dashoffset: 0; } }
 @keyframes ssm-move { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* VIZ-02: OPTIONS GAMMA WALLS */
-.viz-gex { container-type: inline-size; width: 100%; height: 100%; background: #080808; display: flex; align-items: flex-end; justify-content: center; gap: clamp(2px, 1.5cqi, 4px); padding: clamp(10px, 6cqi, 20px); position: relative; border-bottom: 2px solid #333; }
-.gex-bar { width: clamp(4px, 2.5cqi, 8px); background: #0088ff; animation: gex-breathe 2s infinite ease-in-out; box-shadow: 0 0 5px #0088ff; position: relative; }
-.gex-bar.put { background: var(--accent); box-shadow: 0 0 5px var(--accent); animation-delay: 0.5s; }
-.gex-center-line { position: absolute; bottom: 0; left: 50%; height: 100%; width: 1px; border-left: 1px dashed #555; }
-@keyframes gex-breathe { 0%, 100% { height: var(--h); opacity: 0.5; } 50% { height: calc(var(--h) * 1.2); opacity: 1; } }
-
 /* VIZ-200: 3D HALFTONE GRAPHRAG ENGINE */
 .viz-lag { container-type: inline-size; width: 100%; height: 100%; background: #050505; position: relative; overflow: hidden; display: block; }
 #lag-graph-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
