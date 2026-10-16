@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LUIS_PEREZ // PORTFOLIO</title>
+    <link rel="icon" href="data:,">
 
     <link rel="stylesheet" href="css/styles.css?v=1.1">
     <link rel="stylesheet" href="css/animations.css">
@@ -131,6 +132,28 @@
 
             <div class="grid">
 
+                <div class="gb-grid-showcase" id="bartending-showcase-unit" data-unit="dither-os-bartending">
+                    <canvas class="gb-grid-showcase__canvas" id="bartending-gb-canvas"></canvas>
+                    <div class="gb-grid-showcase__screen" id="bartending-gb-screen">
+                        <iframe
+                            id="bartending-game-iframe"
+                            class="gb-grid-showcase__iframe"
+                            title="DITHER-OS Bartending"
+                            src="https://luisp1028.github.io/Bartending/"
+                            allow="camera; microphone; fullscreen; autoplay; clipboard-read; clipboard-write"
+                            loading="eager"
+                            referrerpolicy="no-referrer-when-downgrade"
+                        ></iframe>
+                        <img
+                            id="bartending-gb-screen-shadow"
+                            class="gb-grid-showcase__screen-shadow"
+                            src="assets/gameboy/baked-screen-shadow.png"
+                            alt=""
+                            aria-hidden="true"
+                        />
+                    </div>
+                </div>
+
                 <article class="card" id="obj-200-card">
                     <div class="card-header">
                         <span class="card-id">OBJ-200</span>
@@ -243,8 +266,6 @@
 
     </main>
 
-    </main>
-
     <footer>
         <div class="barcode"></div>
         <p>EST. 2025 // SECTOR 7G // END OF LINE</p>
@@ -294,6 +315,7 @@
     <script src="js/modal-logic.js"></script>
     <script type="module" src="js/hero-particles.js"></script>
     <script type="module" src="js/lag-graph.js"></script>
+    <script type="module" src="js/bartending-gameboy.js"></script>
 
 </body>
 
