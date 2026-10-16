@@ -1,4 +1,26 @@
 <div class="gb-grid-showcase" id="bartending-showcase-unit" data-unit="dither-os-bartending">
+    <svg id="gb-clip-svg" width="0" height="0" style="position:absolute;pointer-events:none;" aria-hidden="true">
+        <defs>
+            <clipPath id="gb-interactive-regions" clipPathUnits="objectBoundingBox">
+                <!-- LCD Screen -->
+                <rect x="0.349176" y="0.162539" width="0.301648" height="0.301648" rx="0.004" />
+                <!-- D-Pad Vertical (Up + Down) -->
+                <rect x="0.308" y="0.647" width="0.058" height="0.165" rx="0.006" />
+                <!-- D-Pad Horizontal (Left + Right) -->
+                <rect x="0.263" y="0.697" width="0.148" height="0.065" rx="0.006" />
+                <!-- B Button -->
+                <rect x="0.579" y="0.713" width="0.070" height="0.078" rx="0.035" />
+                <!-- A Button -->
+                <rect x="0.663" y="0.663" width="0.070" height="0.078" rx="0.035" />
+                <!-- Select Button -->
+                <rect x="0.398" y="0.862" width="0.071" height="0.054" rx="0.015" />
+                <!-- Start Button -->
+                <rect x="0.495" y="0.862" width="0.071" height="0.054" rx="0.015" />
+                <!-- Power Switch -->
+                <rect x="0.285" y="0.048" width="0.060" height="0.028" rx="0.005" />
+            </clipPath>
+        </defs>
+    </svg>
     <canvas class="gb-grid-showcase__canvas" id="bartending-gb-canvas"></canvas>
     <div class="gb-grid-showcase__screen" id="bartending-gb-screen">
         <iframe
@@ -6,7 +28,7 @@
             class="gb-grid-showcase__iframe"
             title="DITHER-OS Bartending"
             src="https://luisp1028.github.io/Bartending/"
-            allow="camera; microphone; fullscreen; autoplay; clipboard-read; clipboard-write"
+            allow="camera; microphone; fullscreen; autoplay; clipboard-read; clipboard-write; accelerometer; gyroscope"
             loading="eager"
             referrerpolicy="no-referrer-when-downgrade"
         ></iframe>

@@ -588,10 +588,15 @@ async function initBartendingGameBoy() {
         if (facingDot <= 0.08) {
             screenEl.style.opacity = '0';
             screenEl.style.pointerEvents = 'none';
+            iframeEl.style.pointerEvents = 'none';
         } else {
             const fade = THREE.MathUtils.clamp((facingDot - 0.08) / 0.14, 0, 1);
             screenEl.style.opacity = fade.toFixed(4);
-            screenEl.style.pointerEvents = isDragging ? 'none' : 'auto';
+            const isFrontInteractive =
+                !isDragging && Math.abs(yawCurrent) <= 0.35 && Math.abs(pitchCurrent) <= 0.35;
+            const pe = isFrontInteractive ? 'auto' : 'none';
+            screenEl.style.pointerEvents = pe;
+            iframeEl.style.pointerEvents = pe;
         }
     }
 

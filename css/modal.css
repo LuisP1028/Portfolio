@@ -373,7 +373,7 @@
 .gb-grid-showcase__screen {
     position: absolute;
     transform-origin: 0 0;
-    overflow: hidden;
+    overflow: visible;
     border-radius: 2px;
     background: #050505;
     z-index: 2;
@@ -393,6 +393,16 @@
     display: block;
     background: transparent;
     pointer-events: auto;
+    -webkit-mask-image: linear-gradient(#000, #000);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: 50% 23.27471%;
+    -webkit-mask-size: 30.16476% 30.16476%;
+    mask-image: linear-gradient(#000, #000);
+    mask-repeat: no-repeat;
+    mask-position: 50% 23.27471%;
+    mask-size: 30.16476% 30.16476%;
+    -webkit-clip-path: url(#gb-interactive-regions);
+    clip-path: url(#gb-interactive-regions);
 }
 
 .gb-grid-showcase__screen-shadow {
